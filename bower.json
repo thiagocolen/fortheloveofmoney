@@ -1,0 +1,25 @@
+{
+  "name": "fortheloveofmoney",
+  "description": "For The Love of Money! ;)",
+  "main": "index.html",
+  "authors": [
+    "thiagocolen <thiago.souzacolen@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.3",
+    "angular-route": "^1.5.3",
+    "angularfire": "^1.2.0",
+    "firebase": "^2.4.2"
+  }
+}
