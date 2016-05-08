@@ -37,11 +37,17 @@ gulp.task('dependencies', function() {
     gulp.src('./bower_components/angularfire/dist/angularfire.js')
         .pipe(gulp.dest('./www/scripts/'));
 
+    gulp.src('./bower_components/angular-chart.js/dist/angular-chart.js')
+        .pipe(gulp.dest('./www/scripts/'));
+
     //css
     gulp.src('./bower_components/bootstrap/dist/css/bootstrap.css')
         .pipe(gulp.dest('./www/styles/'));
 
     gulp.src('./dev/styles/*.css')
+        .pipe(gulp.dest('./www/styles/'));
+
+    gulp.src('/bower_components/angular-chart.js/dist/angular-chart.css')
         .pipe(gulp.dest('./www/styles/'));
 
     //fonts 
