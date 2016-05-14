@@ -14,9 +14,12 @@ gulp.task('clean', function() {
 // WWW Folder
 gulp.task('dependencies', function() {
 
+
     // app
     gulp.src('./dev/scripts/*.js')
         .pipe(gulp.dest('./www/scripts/'));
+
+
 
     // scripts
     gulp.src('./bower_components/jquery/dist/jquery.js')
@@ -37,8 +40,13 @@ gulp.task('dependencies', function() {
     gulp.src('./bower_components/angularfire/dist/angularfire.js')
         .pipe(gulp.dest('./www/scripts/'));
 
+    gulp.src('./bower_components/Chart.js/Chart.js')
+        .pipe(gulp.dest('./www/scripts/'));
+
     gulp.src('./bower_components/angular-chart.js/dist/angular-chart.js')
         .pipe(gulp.dest('./www/scripts/'));
+
+
 
     //css
     gulp.src('./bower_components/bootstrap/dist/css/bootstrap.css')
@@ -47,12 +55,18 @@ gulp.task('dependencies', function() {
     gulp.src('./dev/styles/*.css')
         .pipe(gulp.dest('./www/styles/'));
 
-    gulp.src('/bower_components/angular-chart.js/dist/angular-chart.css')
+    gulp.src('./bower_components/angular-chart.js/dist/angular-chart.css')
         .pipe(gulp.dest('./www/styles/'));
+
+
+
 
     //fonts 
     gulp.src('./bower_components/bootstrap/dist/fonts/*.*')
         .pipe(gulp.dest('./www/fonts/'));
+
+
+
 
     // htmls
     gulp.src('./dev/htmls/views/*.html')
@@ -60,6 +74,7 @@ gulp.task('dependencies', function() {
 
     gulp.src('./dev/htmls/index.html')
         .pipe(gulp.dest('./www/'));
+
 
 });
 

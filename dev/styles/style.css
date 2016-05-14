@@ -1,6 +1,40 @@
 .sortorder:after {
-  content: '\e253';
+    content: '\e253';
 }
+
 .sortorder.reverse:after {
-  content: '\e252';
-}  
+    content: '\e252';
+}
+
+
+
+.navbar-ftlom {
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    color: #fff;
+}
+
+.navbar-brand {	
+    color: white;
+}
+
+.navbar-brand:hover {
+	color: white;
+}
+
+/*
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+*/
+
+
+/*
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+*/

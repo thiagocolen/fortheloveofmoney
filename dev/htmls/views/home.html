@@ -6,31 +6,42 @@
                 <form ng-submit="saveTransaction()">
                     <div class="form-group">
                         <label>Date:</label>
-                        <input type="date" class="form-control" ng-model="newTransaction.date" required="">
+                        <input id="tabindex-first" type="date" class="form-control" ng-model="newTransaction.date" required="" tabindex="1">
                     </div>
                     <div class="form-group">
                         <label>Description:</label>
-                        <input type="text" class="form-control" placeholder="Description" ng-model="newTransaction.description" required="">
+                        <input type="text" class="form-control" placeholder="Description" ng-model="newTransaction.description" required=""  tabindex="2">
                     </div>
                     <div class="form-group">
                         <label>Value:</label>
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
-                            <input type="number" class="form-control" step="0.01" ng-model="newTransaction.value" required="">
+                            <input type="number" class="form-control" step="10.00" ng-model="newTransaction.value" required="" tabindex="3">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control" ng-model="newTransaction.category" required>
+                        <select class="form-control" ng-model="newTransaction.category" required="" tabindex="4">
                             <option ng-repeat="category in categories" value="{{category.$id}}">{{category.name}}</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" tabindex="5">Save</button>
                 </form>
             </div>
         </div>
     </div>
     <div class="col-xs-9">
+        <div>
+            <canvas
+            	id="line" 
+            	class="chart chart-line" 
+            	chart-data="data" 
+            	chart-labels="labels" 
+            	chart-legend="true" 
+            	chart-series="series" 
+            	chart-click="onClick" >
+            </canvas>
+        </div>
         <div class="well">
             <span class="label label-danger">Total: {{ getTotal() }}</span>
         </div>
