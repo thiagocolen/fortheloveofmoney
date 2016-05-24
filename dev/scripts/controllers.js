@@ -19,7 +19,6 @@ fortheloveofmoneyControllers.controller("CategoriesCtrl", ["$scope", "$firebaseA
         $scope.deleteCategory = function(category) {
             $scope.categories.$remove(category);
         }
-
     }
 ]);
 
@@ -29,14 +28,12 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
 
         console.log('HomeCtrl');
 
-
-
         Ref.child('/transactions').orderByChild("date").on("value", function(snapshot, $filter) {
 
             // chart-labels="labels" 
             $scope.labels = [];
             // chart-series="series"
-            $scope.series = ["Series A"];
+            $scope.series = ["CC"];
             // chart-data="data" 
             $scope.data = [];
 
@@ -46,21 +43,17 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.values = [];
   
 
-            snapshot.forEach(function(data, $filter) {                                                    
+            snapshot.forEach(function(data) {
                 // console.log("key: " + data.key() + " : " + data.val().date + " : " + data.val().value);
 
                 var chave = data.key();
                 var valor = data.val().value;
                 var label = data.val().date;
 
+                // console.log('date: ', label.substr(0, 10));
+
                 line.push(valor);
-                console.log(line);
-
-                // $filter('date "yyyy/MM/dd"')(label);
-
-                $scope.labels.push(label);
-                console.log($scope.labels);
-
+                $scope.labels.push(label.substr(0, 10));
             });
 
             $scope.data.push(line);
@@ -69,27 +62,12 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             console.log("The read failed: " + errorObject.code);
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $scope.categories = $firebaseArray(Ref.child('/categories'));
         $scope.transactions = $firebaseArray(Ref.child('/transactions'));
 
         $scope.saveTransaction = function() {
             var list = $firebaseArray(Ref.child('/transactions'));
-            // console.log($scope.newTransaction.date.getTime());
-            $scope.newTransaction.date = $scope.newTransaction.date.getTime();
+            $scope.newTransaction.date = $scope.dateInput.toJSON();
 
             list.$add($scope.newTransaction).then(function(ref) {
                 var id = ref.key();
@@ -104,7 +82,6 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.transactions.$remove(transaction);
         };
 
-
         $scope.getTotal = function() {
             var total = 0;
             for (var i = 0; i < $scope.transactions.length; i++) {
@@ -114,16 +91,12 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             return total;
         };
 
-
         $scope.predicate = 'date';
         $scope.reverse = true;
         $scope.order = function(predicate) {
             $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
             $scope.predicate = predicate;
         };
-
-
-
     }
 ]);
 
