@@ -68,12 +68,22 @@ gulp.task('dependencies', function() {
 
 
 
+    //images 
+    gulp.src('./dev/images/*.*')
+        .pipe(gulp.dest('./www/images/'));
+
+
+
+
     // htmls
     gulp.src('./dev/htmls/views/*.html')
         .pipe(gulp.dest('./www/views/'));
 
     gulp.src('./dev/htmls/index.html')
         .pipe(gulp.dest('./www/'));
+
+
+
 
 
 });
