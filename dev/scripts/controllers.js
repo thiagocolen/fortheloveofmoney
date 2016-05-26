@@ -76,6 +76,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
                     $('#tabindex-first').focus();
                 });
             }
+            
 
             if (type == 'edit') {
 
