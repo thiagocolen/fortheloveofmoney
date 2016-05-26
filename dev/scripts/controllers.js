@@ -37,6 +37,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
 
             // chart-legend="true" 
 
+
             var line = [];
             $scope.values = [];
 
