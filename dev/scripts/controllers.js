@@ -41,6 +41,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.values = [];
 
 
+
             snapshot.forEach(function(data) {
                 // console.log("key: " + data.key() + " : " + data.val().date + " : " + data.val().value);
 
