@@ -34,9 +34,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.series = ["CC"];
             // chart-data="data" 
             $scope.data = [];
-
             // chart-legend="true" 
-
 
             var line = [];
             $scope.values = [];
@@ -59,41 +57,34 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
 
         $scope.categories = $firebaseArray(Ref.child('/categories'));
         $scope.transactions = $firebaseArray(Ref.child('/transactions'));
+        $scope.panelTransaction = {};
+        $scope.panelTransactionAux = {};
 
         $scope.saveTransaction = function(type) {
 
             if (type == 'add') {
-                console.log('adding new transaction...');
-
-                $scope.transaction.date = $scope.dateInput.toJSON();
-
-                $scope.transactions.$add($scope.transaction).then(function(ref) {
-                    var id = ref.key();
-                    // list.$indexFor(id); // returns location in the array
-                    // console.log(id);
-                    $scope.transaction = '';
-                    $scope.dateInput = '';
-                    $('#tabindex-first').focus();
+                $scope.panelTransaction.date = $scope.panelTransactionAux.dateInput.toJSON();
+                $scope.transactions.$add($scope.panelTransaction).then(function(ref) {
+                    $scope.panelTransactionAux = {};
+                    $scope.panelTransaction = {};
+                    $scope.panelControl('close');
                 });
             }
 
             if (type == 'edit') {
+                var transactionRecord = $scope.transactions.$getRecord($scope.panelTransactionAux.id);
+                transactionRecord.date = $scope.panelTransactionAux.dateInput.toJSON();
+                transactionRecord.description = $scope.panelTransaction.description;
+                transactionRecord.value = $scope.panelTransaction.value;
+                transactionRecord.category = $scope.panelTransaction.category;
 
-                // var list = $firebaseArray(Ref.child('/transactions'));
-                
-                // var transactionRecord = $scope.transactions.getRecord($scope.transaction.$id);
-
-            
-
-                // var item = messages.$getRecord(someRecordKey);
-                // item.user = "alanisawesome";
-                // messages.$save(item).then(function() {
-                  // data has been saved to our database
-                // });
-
-                console.log('saveTransaction - type: edit');
-                console.log($scope.transaction.$id);            
+                $scope.transactions.$save(transactionRecord).then(function (){
+                    $scope.panelTransactionAux = {};
+                    $scope.panelTransaction = {};
+                    $scope.panelControl('close');                    
+                });
             }
+
         };
 
         $scope.deleteTransaction = function(transaction) {
@@ -103,13 +94,17 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
 
         $scope.editTransaction = function(transaction) {
             $scope.panelControl('edit');
-            
-            $scope.transaction = transaction;
 
+            $scope.panelTransactionAux.id = transaction.$id;
+            
             var ano = Number(transaction.date.substr(0, 4));
-            var mes = Number(transaction.date.substr(5, 2))-1;
+            var mes = Number(transaction.date.substr(5, 2)) - 1;
             var dia = Number(transaction.date.substr(8, 2));
-            $scope.dateInput = new Date(ano, mes, dia);
+            $scope.panelTransactionAux.dateInput = new Date(ano, mes, dia);
+            
+            $scope.panelTransaction.description = transaction.description;
+            $scope.panelTransaction.value = transaction.value;
+            $scope.panelTransaction.category = transaction.category;
         };
 
         $scope.panelControl = function(type) {
@@ -117,6 +112,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.panelType = type;
 
             if (type == 'add') {
+                $scope.panelClass = 'panel panel-danger';
                 $scope.transaction = '';
                 $scope.dateInput = '';
                 $scope.panelTitle = 'Add Transaction';
@@ -124,6 +120,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             }
 
             if (type == 'edit') {
+                $scope.panelClass = 'panel panel-primary';
                 $scope.panelTitle = 'Edit Transaction';
                 $scope.openedPanel = true;
             }
@@ -135,11 +132,10 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
 
             var setFocus = function() {
                 $('#tabindex-first').focus();
-                console.log('openPanel');
             }
 
             setTimeout(setFocus, 500);
-        }
+        };
 
         $scope.getTotal = function() {
             var total = 0;
