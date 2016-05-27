@@ -62,7 +62,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
 
         $scope.saveTransaction = function(type) {
 
-            if (type == 'add') {
+            if (type == 'add' && $scope.panelForm.$valid == true) {
                 $scope.panelTransaction.date = $scope.panelTransactionAux.dateInput.toJSON();
                 $scope.transactions.$add($scope.panelTransaction).then(function(ref) {
                     $scope.panelTransactionAux = {};
@@ -71,7 +71,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
                 });
             }
 
-            if (type == 'edit') {
+            if (type == 'edit' && $scope.panelForm.$valid == true) {
                 var transactionRecord = $scope.transactions.$getRecord($scope.panelTransactionAux.id);
                 transactionRecord.date = $scope.panelTransactionAux.dateInput.toJSON();
                 transactionRecord.description = $scope.panelTransaction.description;
@@ -84,7 +84,6 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
                     $scope.panelControl('close');                    
                 });
             }
-
         };
 
         $scope.deleteTransaction = function(transaction) {
