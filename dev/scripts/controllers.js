@@ -152,9 +152,8 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.predicate = predicate;
         };
 
-
         hotkeys.add({
-            combo: 'n',
+            combo: 'a t',
             description: 'Add new transaction',
             callback: function() {
                 $scope.panelControl('add');
@@ -165,7 +164,8 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
         hotkeys.add({
             combo: 'alt+c',
             description: 'Close Transaction Panel',
-            callback: function () {
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            callback: function() {
                 $scope.panelControl('close');
                 console.log('hotkeys - close');
             }
