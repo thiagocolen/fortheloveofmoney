@@ -1,8 +1,9 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
-var inject = require('gulp-inject');
 var clean = require('gulp-clean');
+var less = require('gulp-less');
+
 
 
 //Clean WWW Folder 
@@ -51,20 +52,20 @@ gulp.task('dependencies', function() {
 
 
 
-
     //css
-    gulp.src('./bower_components/bootstrap/dist/css/bootstrap.css')
-        .pipe(gulp.dest('./www/styles/'));
-
-    gulp.src('./dev/styles/*.css')
-        .pipe(gulp.dest('./www/styles/'));
-
     gulp.src('./bower_components/angular-chart.js/dist/angular-chart.css')
         .pipe(gulp.dest('./www/styles/'));
 
     gulp.src('./bower_components/angular-hotkeys/build/hotkeys.css')
         .pipe(gulp.dest('./www/styles/'));
 
+
+    gulp.src('./bower_components/bootstrap/dist/css/bootstrap.css')
+        .pipe(gulp.dest('./www/styles/'));
+
+    gulp.src('./dev/styles/*.less')
+        .pipe(less())
+        .pipe(gulp.dest('./www/styles/'));
 
 
 
@@ -93,38 +94,6 @@ gulp.task('dependencies', function() {
 });
 
 
-
-// gulp.task('index-injected', function() {
-//     gulp.src('./dev/htmls/index.html')
-//         .pipe(gulp.dest('./www/'));
-// });
-
-
-// // inject
-// gulp.task('inject', function() {
-//     var target = gulp.src('./www/index.html');
-//     var sources = gulp.src([
-//         './www/scripts/jquery.js',
-//         './www/scripts/bootstrap.js',
-//         './www/styles/bootstrap.css',
-//         './www/scripts/angular.js',
-//         './www/scripts/angular-route.js',
-//         './www/scripts/firebase.js',
-//         './www/scripts/angularfire.js',
-//         './www/scripts/config.js',
-//         './www/scripts/firebase.ref.js',
-//         './www/scripts/app.js',
-//         './www/scripts/controllers.js'
-//     ], {
-//         read: false
-//     });
-
-//     return target.pipe(inject(sources, { relative: true }))
-//         .pipe(gulp.dest('./www/'));
-
-// });
-
-
 // Static server
 gulp.task('browser-sync', function() {
     browserSync.init({
@@ -145,8 +114,5 @@ gulp.task('default', ['browser-sync'], function() {
 // execute:
 // 1. clean
 // 2. gulp dependencies
-
-// 3. gulp index-injected
-// 4. gulp inject
 
 // 5. gulp default
