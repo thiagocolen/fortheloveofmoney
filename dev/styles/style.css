@@ -7,6 +7,9 @@
 }
 
 
+.navbar {
+    border-radius: 0px;
+}
 
 .navbar-ftlom {
     background-color: #5cb85c;
@@ -21,6 +24,25 @@
 .navbar-brand:hover {
 	color: white;
 }
+
+a, a:hover {
+	text-decoration: none;
+	color: white;
+}
+
+
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #E43838;
+    color: yellow;
+}
+
+
+.nav > li > button {
+	margin: 15px 0 0 15px;
+}
+
+
 
 /*
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {

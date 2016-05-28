@@ -4,8 +4,6 @@ console.log('I\'m a app.js and i was loaded, and it\'s for de love of money app'
 
 var fortheloveofmoney = angular.module('fortheloveofmoney', [
     'ngRoute',
-    'firebase',
-    'firebase.ref',
     'fortheloveofmoneyControllers'
 ]);
 

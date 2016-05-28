@@ -46,6 +46,10 @@ gulp.task('dependencies', function() {
     gulp.src('./bower_components/angular-chart.js/dist/angular-chart.js')
         .pipe(gulp.dest('./www/scripts/'));
 
+    gulp.src('./bower_components/angular-hotkeys/build/hotkeys.js')
+        .pipe(gulp.dest('./www/scripts/'));
+
+
 
 
     //css
@@ -56,6 +60,9 @@ gulp.task('dependencies', function() {
         .pipe(gulp.dest('./www/styles/'));
 
     gulp.src('./bower_components/angular-chart.js/dist/angular-chart.css')
+        .pipe(gulp.dest('./www/styles/'));
+
+    gulp.src('./bower_components/angular-hotkeys/build/hotkeys.css')
         .pipe(gulp.dest('./www/styles/'));
 
 
@@ -81,9 +88,6 @@ gulp.task('dependencies', function() {
 
     gulp.src('./dev/htmls/index.html')
         .pipe(gulp.dest('./www/'));
-
-
-
 
 
 });
