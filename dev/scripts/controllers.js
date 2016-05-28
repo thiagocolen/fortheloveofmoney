@@ -1,4 +1,4 @@
-var fortheloveofmoneyControllers = angular.module('fortheloveofmoneyControllers', ['firebase', 'firebase.ref', 'chart.js']);
+var fortheloveofmoneyControllers = angular.module('fortheloveofmoneyControllers', ['firebase', 'firebase.ref', 'chart.js', 'cfp.hotkeys']);
 
 
 fortheloveofmoneyControllers.controller("CategoriesCtrl", ["$scope", "$firebaseArray", "$firebaseObject", "Ref",
@@ -23,8 +23,8 @@ fortheloveofmoneyControllers.controller("CategoriesCtrl", ["$scope", "$firebaseA
 ]);
 
 
-fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray", "$firebaseObject", "Ref", "$filter",
-    function($scope, $firebaseArray, $firebaseObject, Ref, $filter) {
+fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray", "$firebaseObject", "Ref", "$filter", "hotkeys",
+    function($scope, $firebaseArray, $firebaseObject, Ref, $filter, hotkeys) {
 
         Ref.child('/transactions').orderByChild("date").on("value", function(snapshot, $filter) {
 
@@ -78,10 +78,10 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
                 transactionRecord.value = $scope.panelTransaction.value;
                 transactionRecord.category = $scope.panelTransaction.category;
 
-                $scope.transactions.$save(transactionRecord).then(function (){
+                $scope.transactions.$save(transactionRecord).then(function() {
                     $scope.panelTransactionAux = {};
                     $scope.panelTransaction = {};
-                    $scope.panelControl('close');                    
+                    $scope.panelControl('close');
                 });
             }
         };
@@ -95,12 +95,12 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.panelControl('edit');
 
             $scope.panelTransactionAux.id = transaction.$id;
-            
+
             var ano = Number(transaction.date.substr(0, 4));
             var mes = Number(transaction.date.substr(5, 2)) - 1;
             var dia = Number(transaction.date.substr(8, 2));
             $scope.panelTransactionAux.dateInput = new Date(ano, mes, dia);
-            
+
             $scope.panelTransaction.description = transaction.description;
             $scope.panelTransaction.value = transaction.value;
             $scope.panelTransaction.category = transaction.category;
@@ -151,6 +151,26 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
             $scope.predicate = predicate;
         };
+
+
+        hotkeys.add({
+            combo: 'n',
+            description: 'Add new transaction',
+            callback: function() {
+                $scope.panelControl('add');
+                console.log('hotkeys - add');
+            }
+        });
+
+        hotkeys.add({
+            combo: 'alt+c',
+            description: 'Close Transaction Panel',
+            callback: function () {
+                $scope.panelControl('close');
+                console.log('hotkeys - close');
+            }
+        });
+
     }
 ]);
 
