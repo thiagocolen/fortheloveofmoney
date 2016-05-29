@@ -67,7 +67,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
                 $scope.transactions.$add($scope.panelTransaction).then(function(ref) {
                     $scope.panelTransactionAux = {};
                     $scope.panelTransaction = {};
-                    $('#myModal').modal('hide');
+                    $('#transactionModal').modal('hide');
                 });
             }
 
@@ -81,17 +81,17 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
                 $scope.transactions.$save(transactionRecord).then(function() {
                     $scope.panelTransactionAux = {};
                     $scope.panelTransaction = {};
-                    $('#myModal').modal('hide');
+                    $('#transactionModal').modal('hide');
                 });
             }
         };
 
-        $('#myModal').on('hidden.bs.modal', function(e) {
+        $('#transactionModal').on('hidden.bs.modal', function(e) {
             $scope.panelTransactionAux = {};
             $scope.panelTransaction = {};
         });
 
-        $('#myModal').on('shown.bs.modal', function(e) {
+        $('#transactionModal').on('shown.bs.modal', function(e) {
             $('#tabindex-first').focus();
         });
 
@@ -101,8 +101,6 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
 
         $scope.editTransaction = function(transaction) {
             $scope.transactionType = 'edit';
-            console.log("$scope.transactionType = 'edit';");
-            $('#myModal').modal('show');
             $scope.panelTitle = 'Edit Transaction';
 
             $scope.panelTransactionAux.id = transaction.$id;
@@ -115,17 +113,18 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.panelTransaction.description = transaction.description;
             $scope.panelTransaction.value = transaction.value;
             $scope.panelTransaction.category = transaction.category;
+            
+            $('#transactionModal').modal('show');
         };
 
         $scope.newTransaction = function() {
             $scope.transactionType = 'add';
-            console.log("$scope.transactionType = 'add';");
 
             $scope.panelTransactionAux = {};
             $scope.panelTransaction = {};
 
             $scope.panelTitle = 'New Transaction';
-            $('#myModal').modal('show');
+            $('#transactionModal').modal('show');
         };
 
         $scope.getTotal = function() {
@@ -149,7 +148,6 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             description: 'Add new transaction',
             callback: function() {
                 $scope.newTransaction();
-                console.log('Add new transaction hotkey!');
             }
         });
 
