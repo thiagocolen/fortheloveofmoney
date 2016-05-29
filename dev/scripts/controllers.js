@@ -26,6 +26,12 @@ fortheloveofmoneyControllers.controller("CategoriesCtrl", ["$scope", "$firebaseA
 fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray", "$firebaseObject", "Ref", "$filter", "hotkeys",
     function($scope, $firebaseArray, $firebaseObject, Ref, $filter, hotkeys) {
 
+        $scope.partialNavbar = "/htmls/partials/navbar.html";
+        $scope.partialHomeChart = "/htmls/partials/chart.html";
+        $scope.partialTransactionModal = "/htmls/partials/transaction-modal.html";
+        $scope.partialCategoryModal = "/htmls/partials/category-modal.html";
+
+
         Ref.child('/transactions').orderByChild("date").on("value", function(snapshot, $filter) {
 
             // chart-labels="labels" 
