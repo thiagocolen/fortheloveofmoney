@@ -17,7 +17,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
         $scope.partialHomeChart = "/htmls/partials/chart.html";
         $scope.partialTransactionModal = "/htmls/partials/transaction-modal.html";
         $scope.partialCategoryModal = "/htmls/partials/category-modal.html";
-
+        $scope.partialFooter = "/htmls/partials/footer.html";
 
         Ref.child('/transactions').orderByChild("date").on("value", function(snapshot, $filter) {
 
