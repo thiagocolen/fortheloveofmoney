@@ -3,20 +3,6 @@
 // --------------------------------------------------
 
 
-//== My Stuff
-//
-
-//---------------------------
-@sad-yellow: #F6F792;
-@dark-blue: #333745;
-@uniform-blue: #77C4D3;
-@light-blue: #DAEDE2;
-@clean-red: #EA2E49;
-//---------------------------
-@lightest-color: #FFFFFF;
-@darkest-color: #000000;
-//---------------------------
-@border-radius-zero: 0px;
 
 
 //== Colors
@@ -30,11 +16,13 @@
 @gray-light:             lighten(@gray-base, 46.7%); // #777
 @gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
-@brand-primary:         darken(#428bca, 6.5%); // #337ab7
-@brand-success:         #5cb85c;
-@brand-info:            #5bc0de;
-@brand-warning:         #f0ad4e;
-@brand-danger:          #d9534f;
+//== For the love of money style stuff
+//--https://color.adobe.com/pt/create/color-wheel/?copy=true&base=2&rule=Custom&selected=3&name=C%C3%B3pia%20de%20CS04&mode=rgb&rgbvalues=0.964706,0.968627,0.572549,0.199289,0.215578,0.27,0.465992,0.768536,0.827451,0.854902,0.929412,0.886275,0.917647,0.179088,0.287378&swatchOrder=0,1,2,3,4
+@brand-primary:         #333745;
+@brand-success:         #77C4D3;
+@brand-info:            #DAEDE2;
+@brand-warning:         #F6F792;
+@brand-danger:          #EA2E49;
 
 
 //== Scaffolding
@@ -42,23 +30,23 @@
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-@body-bg:               #fff;
+@body-bg:               @brand-info;
 //** Global text color on `<body>`.
-@text-color:            @gray-dark;
+@text-color:            @brand-primary;
 
 //** Global textual link color.
-@link-color:            @brand-primary;
+@link-color:            @brand-danger;
 //** Link hover color set via `darken()` function.
-@link-hover-color:      darken(@link-color, 15%);
+@link-hover-color:      @brand-primary;
 //** Link hover decoration.
-@link-hover-decoration: underline;
+@link-hover-decoration: none;
 
 
 //== Typography
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-sans-serif:  'Alegreya Sans', sans-serif;
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
@@ -118,7 +106,7 @@
 @line-height-large:         1.3333333; // extra decimals for Win 8.1 Chrome
 @line-height-small:         1.5;
 
-@border-radius-base:        4px;
+@border-radius-base:        0px;
 @border-radius-large:       6px;
 @border-radius-small:       3px;
 
@@ -160,27 +148,27 @@
 
 @btn-font-weight:                normal;
 
-@btn-default-color:              #333745;
-@btn-default-bg:                 #EA2E49;
-@btn-default-border:             #DAEDE2;
+@btn-default-color:              @brand-primary;
+@btn-default-bg:                 @brand-info;
+@btn-default-border:             darken(@btn-default-bg, 5%);
 
-@btn-primary-color:              #fff;
+@btn-primary-color:              @brand-info;
 @btn-primary-bg:                 @brand-primary;
 @btn-primary-border:             darken(@btn-primary-bg, 5%);
 
-@btn-success-color:              #fff;
+@btn-success-color:              @brand-primary;
 @btn-success-bg:                 @brand-success;
 @btn-success-border:             darken(@btn-success-bg, 5%);
 
-@btn-info-color:                 #fff;
+@btn-info-color:                 @brand-primary;
 @btn-info-bg:                    @brand-info;
 @btn-info-border:                darken(@btn-info-bg, 5%);
 
-@btn-warning-color:              #fff;
+@btn-warning-color:              @brand-primary;
 @btn-warning-bg:                 @brand-warning;
 @btn-warning-border:             darken(@btn-warning-bg, 5%);
 
-@btn-danger-color:               #fff;
+@btn-danger-color:               @brand-info;
 @btn-danger-bg:                  @brand-danger;
 @btn-danger-border:              darken(@btn-danger-bg, 5%);
 
@@ -375,19 +363,19 @@
 // Basics of a navbar
 @navbar-height:                    50px;
 @navbar-margin-bottom:             @line-height-computed;
-@navbar-border-radius:             @border-radius-zero;
+@navbar-border-radius:             @border-radius-base;
 @navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
 @navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
 @navbar-collapse-max-height:       340px;
 
-@navbar-default-color:             @dark-blue;
-@navbar-default-bg:                @uniform-blue;
+@navbar-default-color:             @brand-info;
+@navbar-default-bg:                @brand-primary;
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
-@navbar-default-link-color:                @dark-blue;
-@navbar-default-link-hover-color:          @sad-yellow;
-@navbar-default-link-hover-bg:             @dark-blue;
+@navbar-default-link-color:                @brand-info;
+@navbar-default-link-hover-color:          @brand-warning;
+@navbar-default-link-hover-bg:             @brand-success;
 @navbar-default-link-active-color:         #555;
 @navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
 @navbar-default-link-disabled-color:       #ccc;
