@@ -12,12 +12,8 @@ fortheloveofmoney.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
         when('/home', {
-            templateUrl: '/views/home.html',
+            templateUrl: 'htmls/views/home.html',
             controller: 'HomeCtrl'
-        }).
-        when('/categories', {
-            templateUrl: '/views/categories.html',
-            controller: 'CategoriesCtrl'
         }).
         otherwise({
             redirectTo: '/home'

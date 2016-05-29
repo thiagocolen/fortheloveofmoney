@@ -84,8 +84,11 @@ gulp.task('dependencies', function() {
 
 
     // htmls
+    gulp.src('./dev/htmls/partials/*.html')
+        .pipe(gulp.dest('./www/htmls/partials'));
+
     gulp.src('./dev/htmls/views/*.html')
-        .pipe(gulp.dest('./www/views/'));
+        .pipe(gulp.dest('./www/htmls/views'));
 
     gulp.src('./dev/htmls/index.html')
         .pipe(gulp.dest('./www/'));
