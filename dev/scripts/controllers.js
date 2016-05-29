@@ -1,15 +1,6 @@
 var fortheloveofmoneyControllers = angular.module('fortheloveofmoneyControllers', ['firebase', 'firebase.ref', 'chart.js', 'cfp.hotkeys']);
 
 
-fortheloveofmoneyControllers.controller("CategoriesCtrl", ["$scope", "$firebaseArray", "$firebaseObject", "Ref",
-    function($scope, $firebaseArray, $firebaseObject, Ref) {
-
-
-
-    }
-]);
-
-
 fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray", "$firebaseObject", "Ref", "$filter", "hotkeys",
     function($scope, $firebaseArray, $firebaseObject, Ref, $filter, hotkeys) {
 
@@ -19,34 +10,53 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
         $scope.partialCategoryModal = "/htmls/partials/category-modal.html";
         $scope.partialFooter = "/htmls/partials/footer.html";
 
-        Ref.child('/transactions').orderByChild("date").on("value", function(snapshot, $filter) {
+        // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+        $scope.currentBalance = 0;
+
+        Ref.child('/transactions').orderByChild("date").on("value", function(snapshot, $filter) {
             // chart-labels="labels" 
             $scope.labels = [];
             // chart-series="series"
-            $scope.series = ["CC"];
+            $scope.series = ["Conta-Corrente"];
             // chart-data="data" 
             $scope.data = [];
             // chart-legend="true" 
+            $scope.chartColours = ['#333745', '#77C4D3', '#DAEDE2', '#F6F792', '#EA2E49', '#333745', '#77C4D3'];
+            // chart-colours
 
             var line = [];
             $scope.values = [];
+
+            $scope.currentBalance = 0;
 
             snapshot.forEach(function(data) {
                 // console.log("key: " + data.key() + " : " + data.val().date + " : " + data.val().value);
 
                 var chave = data.key();
-                var valor = data.val().value;
+                $scope.currentBalance = data.val().value + $scope.currentBalance;
                 var label = data.val().date;
 
-                line.push(valor);
+                line.push($scope.currentBalance);
                 $scope.labels.push(label.substr(0, 10));
+                console.log($scope.currentBalance);
             });
 
             $scope.data.push(line);
         }, function(errorObject) {
             console.log("The read failed: " + errorObject.code);
         });
+
+
+        // $scope.getCurrentBalance = function() {
+        //     for (var i = 0; i < $scope.transactions.length; i++) {
+        //         var transaction = $scope.transactions[i];
+        //         $scope.currentBalance += transaction.value;
+        //     }
+        //     return $scope.currentBalance;
+        // };
+
+        // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         $scope.categories = $firebaseArray(Ref.child('/categories'));
         $scope.transactions = $firebaseArray(Ref.child('/transactions'));
@@ -178,15 +188,6 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
         };
 
         // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-        $scope.getTotal = function() {
-            var total = 0;
-            for (var i = 0; i < $scope.transactions.length; i++) {
-                var transaction = $scope.transactions[i];
-                total += transaction.value;
-            }
-            return total;
-        };
 
         $scope.predicate = 'date';
         $scope.reverse = true;
