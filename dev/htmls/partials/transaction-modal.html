@@ -26,7 +26,7 @@
                             <div class="form-group">
                                 <label>Category</label>
                                 <select class="form-control" ng-model="panelTransaction.category" name="categoryField" required tabindex="4">
-                                    <option value="">----</option>
+                                    <option value=""></option>
                                     <option ng-repeat="category in categories" value="{{category.$id}}">{{category.name}}</option>
                                 </select>
                             </div>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" ng-click="saveTransaction(transactionType)" class="btn btn-danger" tabindex="5">{{panelTitle}}</button>
-                    <button type="button" ng-click="cleanTransactionForm()" class="btn btn-default" data-dismiss="modal" tabindex="6">Close</button>
+                    <button type="button" ng-click="cleanTransactionForm()" class="btn btn-success" data-dismiss="modal" tabindex="6">Close</button>
                 </div>
             </div>
         </div>

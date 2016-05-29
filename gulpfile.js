@@ -60,10 +60,14 @@ gulp.task('dependencies', function() {
         .pipe(gulp.dest('./www/styles/'));
 
 
-    gulp.src('./bower_components/bootstrap/dist/css/bootstrap.css')
-        .pipe(gulp.dest('./www/styles/'));
+    // gulp.src('./bower_components/bootstrap/dist/css/bootstrap.css')
+        // .pipe(gulp.dest('./www/styles/'));
 
     gulp.src('./dev/styles/*.less')
+        .pipe(less())
+        .pipe(gulp.dest('./www/styles/'));
+
+    gulp.src('./dev/styles/bootstrap/bootstrap.less')
         .pipe(less())
         .pipe(gulp.dest('./www/styles/'));
 
