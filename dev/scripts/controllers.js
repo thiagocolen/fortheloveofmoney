@@ -4,21 +4,8 @@ var fortheloveofmoneyControllers = angular.module('fortheloveofmoneyControllers'
 fortheloveofmoneyControllers.controller("CategoriesCtrl", ["$scope", "$firebaseArray", "$firebaseObject", "Ref",
     function($scope, $firebaseArray, $firebaseObject, Ref) {
 
-        $scope.categories = $firebaseArray(Ref.child('/categories'));
 
-        $scope.saveCategory = function() {
-            var list = $firebaseArray(Ref.child('/categories'));
 
-            list.$add($scope.newCategory).then(function(ref) {
-                var id = ref.key();
-                list.$indexFor(id); // returns location in the array
-                $scope.newCategory = '';
-            });
-        };
-
-        $scope.deleteCategory = function(category) {
-            $scope.categories.$remove(category);
-        }
     }
 ]);
 
@@ -67,8 +54,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
         $scope.panelTransactionAux = {};
 
         $scope.saveTransaction = function(type) {
-
-            if (type == 'add' && $scope.panelForm.$valid == true) {
+            if (type == 'add' && this.transactionForm.$valid == true) {
                 $scope.panelTransaction.date = $scope.panelTransactionAux.dateInput.toJSON();
                 $scope.transactions.$add($scope.panelTransaction).then(function(ref) {
                     $scope.panelTransactionAux = {};
@@ -76,8 +62,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
                     $('#transactionModal').modal('hide');
                 });
             }
-
-            if (type == 'edit' && $scope.panelForm.$valid == true) {
+            if (type == 'edit' && this.transactionForm.$valid == true) {
                 var transactionRecord = $scope.transactions.$getRecord($scope.panelTransactionAux.id);
                 transactionRecord.date = $scope.panelTransactionAux.dateInput.toJSON();
                 transactionRecord.description = $scope.panelTransaction.description;
@@ -92,14 +77,12 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             }
         };
 
-        $('#transactionModal').on('hidden.bs.modal', function(e) {
-            $scope.panelTransactionAux = {};
-            $scope.panelTransaction = {};
-        });
-
-        $('#transactionModal').on('shown.bs.modal', function(e) {
-            $('#tabindex-first').focus();
-        });
+        $scope.cleanTransactionForm = function() {
+            $('#transactionModal').on('hidden.bs.modal', function(e) {
+                $scope.panelTransactionAux = {};
+                $scope.panelTransaction = {};
+            });
+        };
 
         $scope.deleteTransaction = function(transaction) {
             $scope.transactions.$remove(transaction);
@@ -119,8 +102,11 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.panelTransaction.description = transaction.description;
             $scope.panelTransaction.value = transaction.value;
             $scope.panelTransaction.category = transaction.category;
-            
+
             $('#transactionModal').modal('show');
+            $('#transactionModal').on('shown.bs.modal', function(e) {
+                $('#transactionForm-firstField').focus();
+            });
         };
 
         $scope.newTransaction = function() {
@@ -128,10 +114,70 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
 
             $scope.panelTransactionAux = {};
             $scope.panelTransaction = {};
-
             $scope.panelTitle = 'New Transaction';
+
             $('#transactionModal').modal('show');
+            $('#transactionModal').on('shown.bs.modal', function(e) {
+                $('#transactionForm-firstField').focus();
+            });
         };
+
+        // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        $scope.panelCategory = {};
+        $scope.panelCategoryAux = {};
+        $scope.categoryType = '';
+
+        $scope.manageCategories = function() {
+            $scope.categoryType = 'add';
+
+            $('#categoryModal').modal('show');
+            $('#categoryModal').on('shown.bs.modal', function(e) {
+                $('#categoryForm-firstField').focus();
+            });
+        };
+
+        $scope.editCategory = function(category) {
+            $scope.categoryType = 'edit';
+            $scope.panelCategory.name = category.name;
+            $scope.panelCategoryAux.id = category.$id;
+
+            $('#categoryForm-firstField').focus();
+        };
+
+        $scope.saveCategory = function() {
+            if ($scope.categoryType == 'add' && this.categoryForm.$valid == true) {
+                var list = $firebaseArray(Ref.child('/categories'));
+
+                list.$add(this.panelCategory).then(function() {
+                    $scope.cleanCategoryForm();
+                    $('#categoryForm-firstField').focus();
+                });
+            }
+
+            if ($scope.categoryType == 'edit' && this.categoryForm.$valid == true) {
+                var categoryRecord = $scope.categories.$getRecord($scope.panelCategoryAux.id);
+                categoryRecord.name = this.panelCategory.name;
+                $scope.categories.$save(categoryRecord).then(function() {
+                    $scope.panelCategoryAux = {};
+                    $scope.panelCategory = {};
+                });
+            }
+
+            $scope.categoryType = 'add';
+        };
+
+        $scope.deleteCategory = function(category) {
+            $scope.categories.$remove(category);
+        };
+
+        $scope.cleanCategoryForm = function() {
+            console.log('cleanCategoryForm');
+            $scope.panelCategory = {};
+            $scope.panelCategoryAux = {};
+        };
+
+        // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         $scope.getTotal = function() {
             var total = 0;
@@ -151,21 +197,19 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
 
         hotkeys.add({
             combo: 'alt+t',
-            description: 'Add new transaction',
+            description: 'Add New Transaction',
             callback: function() {
                 $scope.newTransaction();
             }
         });
 
-        // hotkeys.add({
-        //     combo: 'esc',
-        //     description: 'Close Transaction Panel',
-        //     allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        //     callback: function() {
-        //         $scope.panelControl('close');
-        //         console.log('hotkeys - close');
-        //     }
-        // });
+        hotkeys.add({
+            combo: 'alt+c',
+            description: 'Manage Categories',
+            callback: function() {
+                $scope.manageCategories();
+            }
+        });
 
     }
 ]);
