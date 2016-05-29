@@ -67,7 +67,7 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
                 $scope.transactions.$add($scope.panelTransaction).then(function(ref) {
                     $scope.panelTransactionAux = {};
                     $scope.panelTransaction = {};
-                    $scope.panelControl('close');
+                    $('#myModal').modal('hide');
                 });
             }
 
@@ -81,18 +81,29 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
                 $scope.transactions.$save(transactionRecord).then(function() {
                     $scope.panelTransactionAux = {};
                     $scope.panelTransaction = {};
-                    $scope.panelControl('close');
+                    $('#myModal').modal('hide');
                 });
             }
         };
 
+        $('#myModal').on('hidden.bs.modal', function(e) {
+            $scope.panelTransactionAux = {};
+            $scope.panelTransaction = {};
+        });
+
+        $('#myModal').on('shown.bs.modal', function(e) {
+            $('#tabindex-first').focus();
+        });
+
         $scope.deleteTransaction = function(transaction) {
-            // -----------------------------------------------
             $scope.transactions.$remove(transaction);
         };
 
         $scope.editTransaction = function(transaction) {
-            $scope.panelControl('edit');
+            $scope.transactionType = 'edit';
+            console.log("$scope.transactionType = 'edit';");
+            $('#myModal').modal('show');
+            $scope.panelTitle = 'Edit Transaction';
 
             $scope.panelTransactionAux.id = transaction.$id;
 
@@ -106,34 +117,15 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.panelTransaction.category = transaction.category;
         };
 
-        $scope.panelControl = function(type) {
+        $scope.newTransaction = function() {
+            $scope.transactionType = 'add';
+            console.log("$scope.transactionType = 'add';");
 
-            $scope.panelType = type;
+            $scope.panelTransactionAux = {};
+            $scope.panelTransaction = {};
 
-            if (type == 'add') {
-                $scope.panelClass = 'panel panel-danger';
-                $scope.transaction = '';
-                $scope.dateInput = '';
-                $scope.panelTitle = 'Add Transaction';
-                $scope.openedPanel = true;
-            }
-
-            if (type == 'edit') {
-                $scope.panelClass = 'panel panel-primary';
-                $scope.panelTitle = 'Edit Transaction';
-                $scope.openedPanel = true;
-            }
-
-            if (type == 'close') {
-                $scope.openedPanel = false;
-                $scope.panelTitle = '';
-            }
-
-            var setFocus = function() {
-                $('#tabindex-first').focus();
-            }
-
-            setTimeout(setFocus, 500);
+            $scope.panelTitle = 'New Transaction';
+            $('#myModal').modal('show');
         };
 
         $scope.getTotal = function() {
@@ -153,23 +145,23 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
         };
 
         hotkeys.add({
-            combo: 'a t',
+            combo: 'alt+t',
             description: 'Add new transaction',
             callback: function() {
-                $scope.panelControl('add');
-                console.log('hotkeys - add');
+                $scope.newTransaction();
+                console.log('Add new transaction hotkey!');
             }
         });
 
-        hotkeys.add({
-            combo: 'alt+c',
-            description: 'Close Transaction Panel',
-            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-            callback: function() {
-                $scope.panelControl('close');
-                console.log('hotkeys - close');
-            }
-        });
+        // hotkeys.add({
+        //     combo: 'esc',
+        //     description: 'Close Transaction Panel',
+        //     allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        //     callback: function() {
+        //         $scope.panelControl('close');
+        //         console.log('hotkeys - close');
+        //     }
+        // });
 
     }
 ]);
