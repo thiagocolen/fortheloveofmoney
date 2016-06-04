@@ -4,7 +4,7 @@
       "name" : "Categoria 1"
     },
     "-KIxZ49--cWZJgWxOmqB" : {
-      "name" : "categoria 2"
+      "name" : "Categoria 2"
     },
     "-KIxZ5EBeZiv7b4KbnFX" : {
       "name" : "categoria 3"
@@ -14,50 +14,65 @@
     },
     "-KIxZ6bOWjVhGg8zeU1K" : {
       "name" : "categoria 5"
+    },
+    "-KJROc8iPCsMp2hkx9Ab" : {
+      "name" : "Categoria Nova"
     }
   },
   "transactions" : {
     "-KIxZGjvoIFGI-27aJJn" : {
-      "category" : "-KIxZ367nwOTlo-bVdlt",
+      "category" : "-KIxZ5EBeZiv7b4KbnFX",
       "date" : "2016-01-01T02:00:00.000Z",
       "description" : "transação financeira 1",
-      "value" : 1000
+      "value" : 20
     },
     "-KIxZLexSDzoLrDSBVys" : {
       "category" : "-KIxZ49--cWZJgWxOmqB",
       "date" : "2016-01-01T02:00:00.000Z",
       "description" : "transação financeira 2",
-      "value" : 2000
+      "value" : 10
     },
     "-KIxZPSO7YatCFuuvCjF" : {
       "category" : "-KIxZ6bOWjVhGg8zeU1K",
       "date" : "2015-01-27T02:00:00.000Z",
       "description" : "transação financeira 3",
-      "value" : -22000
+      "value" : 10
     },
     "-KIxZTqgvENvfoc79-CS" : {
       "category" : "-KIxZ6bOWjVhGg8zeU1K",
       "date" : "2016-01-01T02:00:00.000Z",
       "description" : "transação financeira 4",
-      "value" : -1000
+      "value" : 150.5
     },
     "-KIx_FeLNeYWOsBqeXbp" : {
       "category" : "-KIxZ6bOWjVhGg8zeU1K",
       "date" : "2016-01-01T02:00:00.000Z",
       "description" : "transação financeira 5",
-      "value" : 5000
+      "value" : -100
     },
     "-KIxcQ-_4yUP66rC51Zm" : {
       "category" : "-KIxZ367nwOTlo-bVdlt",
       "date" : "2016-01-01T02:00:00.000Z",
       "description" : "transação financeira 6",
-      "value" : 50000
+      "value" : -50
     },
     "-KIyIhkMnK2pvucGKANe" : {
       "category" : "-KIxZ5v-A70SxhrjtKgG",
       "date" : "2000-01-01T02:00:00.000Z",
       "description" : "transação financeira 7",
-      "value" : -1000
+      "value" : 100
+    },
+    "-KJQpbH7-ivRN9MEox42" : {
+      "category" : "-KIxZ49--cWZJgWxOmqB",
+      "date" : "2016-01-01T02:00:00.000Z",
+      "description" : "Teste",
+      "value" : 80.5
+    },
+    "-KJRPzZubPga5QFheId_" : {
+      "category" : "-KJROc8iPCsMp2hkx9Ab",
+      "date" : "1980-10-10T03:00:00.000Z",
+      "description" : "Thiago Colen",
+      "value" : -10
     }
   }
 }
