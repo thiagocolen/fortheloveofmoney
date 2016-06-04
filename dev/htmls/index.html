@@ -22,13 +22,21 @@
     <script src="scripts/angular-route.js"></script>
     <script src="scripts/firebase.js"></script>
     <script src="scripts/angularfire.js"></script>
-    <script src="scripts/config.js"></script>
-    <script src="scripts/firebase.ref.js"></script>
     <script src="scripts/Chart.js"></script>
     <script src="scripts/angular-chart.js"></script>
     <script src="scripts/hotkeys.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyBRQPk951Ca2REMDC-OeUBPLuNLZwbAPKw",
+        authDomain: "fortheloveofmoney.firebaseapp.com",
+        databaseURL: "https://fortheloveofmoney.firebaseio.com",
+        storageBucket: "project-618754679478432912.appspot.com",
+    };
+    firebase.initializeApp(config);
+    </script>
 </body>
 
 </html>

@@ -1,14 +1,15 @@
-var fortheloveofmoneyControllers = angular.module('fortheloveofmoneyControllers', ['firebase', 'firebase.ref', 'chart.js', 'cfp.hotkeys']);
+var fortheloveofmoneyControllers = angular.module('fortheloveofmoneyControllers', ['firebase', 'chart.js', 'cfp.hotkeys']);
 
-
-fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray", "$firebaseObject", "Ref", "$filter", "hotkeys",
-    function($scope, $firebaseArray, $firebaseObject, Ref, $filter, hotkeys) {
+fortheloveofmoneyControllers.controller('HomeCtrl', ['$scope', '$firebaseArray', '$firebaseObject', '$filter', 'hotkeys',
+    function($scope, $firebaseArray, $firebaseObject, $filter, hotkeys) {
 
         $scope.partialNavbar = "/htmls/partials/navbar.html";
         $scope.partialHomeChart = "/htmls/partials/chart.html";
         $scope.partialTransactionModal = "/htmls/partials/transaction-modal.html";
         $scope.partialCategoryModal = "/htmls/partials/category-modal.html";
         $scope.partialFooter = "/htmls/partials/footer.html";
+
+        var Ref = firebase.database().ref();
 
         // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -31,9 +32,9 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
             $scope.currentBalance = 0;
 
             snapshot.forEach(function(data) {
-                // console.log("key: " + data.key() + " : " + data.val().date + " : " + data.val().value);
+                // console.log("The " + data.key + " score is " + data.val().date);
 
-                var chave = data.key();
+                var chave = data.key;
                 $scope.currentBalance = data.val().value + $scope.currentBalance;
                 var label = data.val().date;
 
@@ -215,9 +216,8 @@ fortheloveofmoneyControllers.controller("HomeCtrl", ["$scope", "$firebaseArray",
     }
 ]);
 
-
-fortheloveofmoneyControllers.filter('categoryFilter', ['Ref',
-    function(Ref) {
+fortheloveofmoneyControllers.filter('categoryFilter', [
+    function() {
 
         // if (category) {
         //     console.log('category');
@@ -227,6 +227,7 @@ fortheloveofmoneyControllers.filter('categoryFilter', ['Ref',
 
         return function(category) {
             var categoryName;
+            var Ref = firebase.database().ref();
 
             Ref.child('/categories/' + category).on("value", function(snapshot) {
                 // console.log(snapshot.val().name);
