@@ -9,10 +9,21 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "bower": "^1.7.9",
     "browser-sync": "^2.11.2",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.1",
     "gulp-less": "^3.1.0"
+  },
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-chart.js": "^0.10.2",
+    "angular-hotkeys": "^1.7.0",
+    "angular-route": "^1.6.1",
+    "angularfire": "^2.2.0",
+    "bootstrap": "^3.3.7",
+    "firebase": "^3.6.4",
+    "jquery": "^3.1.1"
   }
 }
+

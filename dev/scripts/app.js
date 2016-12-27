@@ -1,22 +1,12 @@
-//app.js 
-console.log('I\'m a app.js and i was loaded, and it\'s for de love of money app');
+(function() {
+  'use strict';
 
+  angular
+    .module('fortheloveofmoney', [
+      'ngRoute',
+      'firebase',
+      'chart.js',
+      'cfp.hotkeys'
+    ]);
 
-var fortheloveofmoney = angular.module('fortheloveofmoney', [
-    'ngRoute',
-    'fortheloveofmoneyControllers'
-]);
-
-
-fortheloveofmoney.config(['$routeProvider',
-    function($routeProvider) {
-        $routeProvider.
-        when('/home', {
-            templateUrl: 'htmls/views/home.html',
-            controller: 'HomeCtrl'
-        }).
-        otherwise({
-            redirectTo: '/home'
-        });
-    }
-]);
+})();
