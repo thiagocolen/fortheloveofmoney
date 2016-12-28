@@ -5,9 +5,9 @@
     .module('fortheloveofmoney')
     .controller('LoginCtrl', LoginCtrl);
 
-  LoginCtrl.$inject = ['$scope', 'AuthenticationService', '$firebaseAuth'];
+  LoginCtrl.$inject = ['$scope', 'AuthenticationService', '$firebaseAuth', 'currentAuth'];
 
-  function LoginCtrl($scope, AuthenticationService, $firebaseAuth) {
+  function LoginCtrl($scope, AuthenticationService, $firebaseAuth, currentAuth) {
     $scope.partialFooter = "/htmls/partials/footer.html";
     $scope.partialNavbar = "/htmls/partials/navbar.html";
     $scope.partialLogin = "/htmls/partials/login.html";
