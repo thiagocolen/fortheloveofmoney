@@ -5,9 +5,9 @@
     .module('fortheloveofmoney')
     .service('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$firebaseAuth'];
+  AuthenticationService.$inject = ['$firebaseAuth', '$location'];
 
-  function AuthenticationService($firebaseAuth) {
+  function AuthenticationService($firebaseAuth, $location) {
 
     var service = {
       login: login,
@@ -29,6 +29,7 @@
       console.log('Authentication: logout');
       var authObj = $firebaseAuth();
       authObj.$signOut();
+      $location.url('/login');
     }
 
   }
