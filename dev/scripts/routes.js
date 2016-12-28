@@ -29,7 +29,8 @@
               return Auth.$waitForSignIn();
             }]
           }
-        });
+        }).
+        otherwise({redirectTo:'/login'});
       }
     ]);
 
