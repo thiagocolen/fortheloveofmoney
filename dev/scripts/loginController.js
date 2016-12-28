@@ -5,9 +5,10 @@
     .module('fortheloveofmoney')
     .controller('LoginCtrl', LoginCtrl);
 
-  LoginCtrl.$inject = ['$scope', 'AuthenticationService', '$firebaseAuth', 'currentAuth'];
+  LoginCtrl.$inject = ['$scope', 'AuthenticationService', '$firebaseAuth', 'currentAuth', '$location'];
 
-  function LoginCtrl($scope, AuthenticationService, $firebaseAuth, currentAuth) {
+  function LoginCtrl($scope, AuthenticationService, $firebaseAuth, currentAuth, $location) {
+
     $scope.partialFooter = "/htmls/partials/footer.html";
     $scope.partialNavbar = "/htmls/partials/navbar.html";
     $scope.partialLogin = "/htmls/partials/login.html";
@@ -20,20 +21,9 @@
       AuthenticationService.logout();
     }
 
-    $scope.getAuth = function() {
-      AuthenticationService.getAuth();
+    if (currentAuth != null) {
+      $location.url('/home');
     }
-
-
-    var authObj = $firebaseAuth();
-    authObj.$onAuthStateChanged(function(firebaseUser) {
-      console.log('getAuth ->');
-      if (firebaseUser) {
-        console.log("getAuth -> Signed in as:", firebaseUser);
-      } else {
-        console.log("getAuth -> Signed out");
-      }
-    });
 
   }
 
