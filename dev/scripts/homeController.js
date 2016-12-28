@@ -5,9 +5,14 @@
     .module('fortheloveofmoney')
     .controller('HomeCtrl', HomeCtrl);
 
-  HomeCtrl.$inject = ['$scope', '$firebaseArray', '$firebaseObject', '$filter', 'hotkeys'];
+  HomeCtrl.$inject = ['$scope', '$firebaseArray', '$firebaseObject', '$filter', 'hotkeys', 'currentAuth', 'AuthenticationService'];
 
-  function HomeCtrl($scope, $firebaseArray, $firebaseObject, $filter, hotkeys) {
+  function HomeCtrl($scope, $firebaseArray, $firebaseObject, $filter, hotkeys, currentAuth, AuthenticationService) {
+
+    $scope.logout = function() {
+      console.log('logout at home');
+      AuthenticationService.logout();
+    }
 
     $scope.partialFooter = "/htmls/partials/footer.html";
     $scope.partialNavbar = "/htmls/partials/navbar.html";
