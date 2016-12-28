@@ -15,15 +15,21 @@
         <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
+                    <a href="">Hi, {{ firebaseUser.displayName }}</a>
+                </li>
+                <li>
                     <a href="" ng-click="newTransaction()">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        &nbsp; Create Transaction
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp; Create Transaction
                     </a>
                 </li>
                 <li>
                     <a href="" ng-click="manageCategories()">
-                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                        &nbsp; Categories
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> &nbsp; Categories
+                    </a>
+                </li>
+                <li>
+                    <a href="" ng-click="logout()">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> &nbsp; logout
                     </a>
                 </li>
                 <li>

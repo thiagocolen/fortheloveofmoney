@@ -17,7 +17,7 @@ gulp.task('clean', function() {
 gulp.task('dependencies', function() {
 
   // app
-  gulp.src('./dev/scripts/*.js')
+  gulp.src('./dev/scripts/**/*.js')
     .pipe(concat('main.js'))
     .pipe(gulp.dest('./www/scripts/'));
 
