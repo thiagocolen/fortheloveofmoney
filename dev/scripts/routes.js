@@ -21,6 +21,7 @@
         when('/login', {
           templateUrl: 'htmls/views/login.html',
           controller: 'LoginCtrl',
+          controllerAs: 'vm',
           resolve: {
             // controller will not be loaded until $waitForSignIn resolves
             // Auth refers to our $firebaseAuth wrapper in the factory below

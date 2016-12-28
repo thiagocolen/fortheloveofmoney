@@ -5,24 +5,28 @@
     .module('fortheloveofmoney')
     .controller('LoginCtrl', LoginCtrl);
 
-  LoginCtrl.$inject = ['$scope', 'AuthenticationService', '$firebaseAuth', 'currentAuth', '$location'];
+  LoginCtrl.$inject = ['AuthenticationService', '$firebaseAuth', 'currentAuth', '$location'];
 
-  function LoginCtrl($scope, AuthenticationService, $firebaseAuth, currentAuth, $location) {
+  function LoginCtrl(AuthenticationService, $firebaseAuth, currentAuth, $location) {
+    var vm = this;
 
-    $scope.partialFooter = "/htmls/partials/footer.html";
-    $scope.partialNavbar = "/htmls/partials/navbar.html";
-    $scope.partialLogin = "/htmls/partials/login.html";
+    vm.partialFooter = "/htmls/partials/footer.html";
+    vm.partialNavbar = "/htmls/partials/navbar.html";
+    vm.partialLogin = "/htmls/partials/login.html";
+    vm.login = login;
 
-    $scope.login = function() {
+    redirect();
+
+    ////////////
+
+    function login() {
       var result = AuthenticationService.login();
     }
 
-    $scope.logout = function() {
-      AuthenticationService.logout();
-    }
-
-    if (currentAuth != null) {
-      $location.url('/home');
+    function redirect() {
+      if (currentAuth != null) {
+        $location.url('/home');
+      }
     }
 
   }
