@@ -68,73 +68,73 @@
 
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    $scope.categories = $firebaseArray(Ref.child('/categories'));
-    $scope.transactions = $firebaseArray(Ref.child('/transactions'));
-    $scope.panelTransaction = {};
-    $scope.panelTransactionAux = {};
+    // $scope.categories = $firebaseArray(Ref.child('/categories'));
+    // $scope.transactions = $firebaseArray(Ref.child('/transactions'));
+    // $scope.panelTransaction = {};
+    // $scope.panelTransactionAux = {};
 
-    $scope.saveTransaction = function(type) {
-      if (type == 'add' && this.transactionForm.$valid == true) {
-        $scope.panelTransaction.date = $scope.panelTransactionAux.dateInput.toJSON();
-        $scope.transactions.$add($scope.panelTransaction).then(function(ref) {
-          $scope.panelTransactionAux = {};
-          $scope.panelTransaction = {};
-          $('#transactionModal').modal('hide');
-        });
-      }
-      if (type == 'edit' && this.transactionForm.$valid == true) {
-        var transactionRecord = $scope.transactions.$getRecord($scope.panelTransactionAux.id);
-        transactionRecord.date = $scope.panelTransactionAux.dateInput.toJSON();
-        transactionRecord.description = $scope.panelTransaction.description;
-        transactionRecord.value = $scope.panelTransaction.value;
-        transactionRecord.category = $scope.panelTransaction.category;
+    // $scope.saveTransaction = function(type) {
+    //   if (type == 'add' && this.transactionForm.$valid == true) {
+    //     $scope.panelTransaction.date = $scope.panelTransactionAux.dateInput.toJSON();
+    //     $scope.transactions.$add($scope.panelTransaction).then(function(ref) {
+    //       $scope.panelTransactionAux = {};
+    //       $scope.panelTransaction = {};
+    //       $('#transactionModal').modal('hide');
+    //     });
+    //   }
+    //   if (type == 'edit' && this.transactionForm.$valid == true) {
+    //     var transactionRecord = $scope.transactions.$getRecord($scope.panelTransactionAux.id);
+    //     transactionRecord.date = $scope.panelTransactionAux.dateInput.toJSON();
+    //     transactionRecord.description = $scope.panelTransaction.description;
+    //     transactionRecord.value = $scope.panelTransaction.value;
+    //     transactionRecord.category = $scope.panelTransaction.category;
 
-        $scope.transactions.$save(transactionRecord).then(function() {
-          $scope.panelTransactionAux = {};
-          $scope.panelTransaction = {};
-          $('#transactionModal').modal('hide');
-        });
-      }
-    };
+    //     $scope.transactions.$save(transactionRecord).then(function() {
+    //       $scope.panelTransactionAux = {};
+    //       $scope.panelTransaction = {};
+    //       $('#transactionModal').modal('hide');
+    //     });
+    //   }
+    // };
 
-    $scope.cleanTransactionForm = function() {
-      $('#transactionModal').on('hidden.bs.modal', function(e) {
-        $scope.panelTransactionAux = {};
-        $scope.panelTransaction = {};
-      });
-    };
+    // $scope.cleanTransactionForm = function() {
+    //   $('#transactionModal').on('hidden.bs.modal', function(e) {
+    //     $scope.panelTransactionAux = {};
+    //     $scope.panelTransaction = {};
+    //   });
+    // };
 
-    $scope.deleteTransaction = function(transaction) {
-      $scope.transactions.$remove(transaction);
-    };
+    // $scope.deleteTransaction = function(transaction) {
+    //   $scope.transactions.$remove(transaction);
+    // };
 
-    $scope.editTransaction = function(transaction) {
-      $scope.transactionType = 'edit';
-      $scope.panelTitle = 'Edit Transaction';
+    // $scope.editTransaction = function(transaction) {
+    //   $scope.transactionType = 'edit';
+    //   $scope.panelTitle = 'Edit Transaction';
 
-      $scope.panelTransactionAux.id = transaction.$id;
+    //   $scope.panelTransactionAux.id = transaction.$id;
 
-      var ano = Number(transaction.date.substr(0, 4));
-      var mes = Number(transaction.date.substr(5, 2)) - 1;
-      var dia = Number(transaction.date.substr(8, 2));
-      $scope.panelTransactionAux.dateInput = new Date(ano, mes, dia);
+    //   var ano = Number(transaction.date.substr(0, 4));
+    //   var mes = Number(transaction.date.substr(5, 2)) - 1;
+    //   var dia = Number(transaction.date.substr(8, 2));
+    //   $scope.panelTransactionAux.dateInput = new Date(ano, mes, dia);
 
-      $scope.panelTransaction.description = transaction.description;
-      $scope.panelTransaction.value = transaction.value;
-      $scope.panelTransaction.category = transaction.category;
+    //   $scope.panelTransaction.description = transaction.description;
+    //   $scope.panelTransaction.value = transaction.value;
+    //   $scope.panelTransaction.category = transaction.category;
 
-      $('#transactionModal').modal('show');
-      $('#transactionModal').on('shown.bs.modal', function(e) {
-        $('#transactionForm-firstField').focus();
-      });
-    };
+    //   $('#transactionModal').modal('show');
+    //   $('#transactionModal').on('shown.bs.modal', function(e) {
+    //     $('#transactionForm-firstField').focus();
+    //   });
+    // };
 
     $scope.newTransaction = function() {
       $scope.transactionType = 'add';
 
-      $scope.panelTransactionAux = {};
-      $scope.panelTransaction = {};
-      $scope.panelTitle = 'New Transaction';
+      // $scope.panelTransactionAux = {};
+      // $scope.panelTransaction = {};
+      // $scope.panelTitle = 'New Transaction';
 
       $('#transactionModal').modal('show');
       $('#transactionModal').on('shown.bs.modal', function(e) {
