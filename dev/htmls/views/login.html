@@ -1,3 +1,17 @@
 <div ng-include="vm.partialNavbar"></div>
-<div ng-include="vm.partialLogin"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <button ng-click="vm.login()">Entrar com o Google</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <footer-directive></footer-directive>
