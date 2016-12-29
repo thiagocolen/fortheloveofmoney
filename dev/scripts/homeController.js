@@ -144,9 +144,9 @@
 
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    $scope.panelCategory = {};
-    $scope.panelCategoryAux = {};
-    $scope.categoryType = '';
+    // $scope.panelCategory = {};
+    // $scope.panelCategoryAux = {};
+    // $scope.categoryType = '';
 
     $scope.manageCategories = function() {
       $scope.categoryType = 'add';
@@ -157,45 +157,45 @@
       });
     };
 
-    $scope.editCategory = function(category) {
-      $scope.categoryType = 'edit';
-      $scope.panelCategory.name = category.name;
-      $scope.panelCategoryAux.id = category.$id;
+    // $scope.editCategory = function(category) {
+    //   $scope.categoryType = 'edit';
+    //   $scope.panelCategory.name = category.name;
+    //   $scope.panelCategoryAux.id = category.$id;
 
-      $('#categoryForm-firstField').focus();
-    };
+    //   $('#categoryForm-firstField').focus();
+    // };
 
-    $scope.saveCategory = function() {
-      if ($scope.categoryType == 'add' && this.categoryForm.$valid == true) {
-        var list = $firebaseArray(Ref.child('/categories'));
+    // $scope.saveCategory = function() {
+    //   if ($scope.categoryType == 'add' && this.categoryForm.$valid == true) {
+    //     var list = $firebaseArray(Ref.child('/categories'));
 
-        list.$add(this.panelCategory).then(function() {
-          $scope.cleanCategoryForm();
-          $('#categoryForm-firstField').focus();
-        });
-      }
+    //     list.$add(this.panelCategory).then(function() {
+    //       $scope.cleanCategoryForm();
+    //       $('#categoryForm-firstField').focus();
+    //     });
+    //   }
 
-      if ($scope.categoryType == 'edit' && this.categoryForm.$valid == true) {
-        var categoryRecord = $scope.categories.$getRecord($scope.panelCategoryAux.id);
-        categoryRecord.name = this.panelCategory.name;
-        $scope.categories.$save(categoryRecord).then(function() {
-          $scope.panelCategoryAux = {};
-          $scope.panelCategory = {};
-        });
-      }
+    //   if ($scope.categoryType == 'edit' && this.categoryForm.$valid == true) {
+    //     var categoryRecord = $scope.categories.$getRecord($scope.panelCategoryAux.id);
+    //     categoryRecord.name = this.panelCategory.name;
+    //     $scope.categories.$save(categoryRecord).then(function() {
+    //       $scope.panelCategoryAux = {};
+    //       $scope.panelCategory = {};
+    //     });
+    //   }
 
-      $scope.categoryType = 'add';
-    };
+    //   $scope.categoryType = 'add';
+    // };
 
-    $scope.deleteCategory = function(category) {
-      $scope.categories.$remove(category);
-    };
+    // $scope.deleteCategory = function(category) {
+    //   $scope.categories.$remove(category);
+    // };
 
-    $scope.cleanCategoryForm = function() {
-      console.log('cleanCategoryForm');
-      $scope.panelCategory = {};
-      $scope.panelCategoryAux = {};
-    };
+    // $scope.cleanCategoryForm = function() {
+    //   console.log('cleanCategoryForm');
+    //   $scope.panelCategory = {};
+    //   $scope.panelCategoryAux = {};
+    // };
 
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
