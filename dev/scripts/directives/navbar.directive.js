@@ -32,10 +32,6 @@
       function newTransaction() {
         $scope.$parent.transactionType = 'add';
 
-        // $scope.panelTransactionAux = {};
-        // $scope.panelTransaction = {};
-        // $scope.panelTitle = 'New Transaction';
-
         $('#transactionModal').modal('show');
         $('#transactionModal').on('shown.bs.modal', function(e) {
           $('#transactionForm-firstField').focus();
