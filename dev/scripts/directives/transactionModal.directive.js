@@ -62,18 +62,18 @@
             $('#transactionModal').modal('hide');
           });
         }
-      };
+      }
 
       function cleanTransactionForm() {
         $('#transactionModal').on('hidden.bs.modal', function(e) {
           vm.panelTransactionAux = {};
           vm.panelTransaction = {};
         });
-      };
+      }
 
       function deleteTransaction(transaction) {
         vm.transactions.$remove(transaction);
-      };
+      }
 
       function editTransaction(transaction) {
         vm.transactionType = 'edit';
@@ -94,20 +94,7 @@
         $('#transactionModal').on('shown.bs.modal', function(e) {
           $('#transactionForm-firstField').focus();
         });
-      };
-
-      // $scope.newTransaction = function() {
-      //   $scope.transactionType = 'add';
-
-      //   $scope.panelTransactionAux = {};
-      //   $scope.panelTransaction = {};
-      //   $scope.panelTitle = 'New Transaction';
-
-      //   $('#transactionModal').modal('show');
-      //   $('#transactionModal').on('shown.bs.modal', function(e) {
-      //     $('#transactionForm-firstField').focus();
-      //   });
-      // };
+      }
     }
 
     return directive;
