@@ -10,7 +10,6 @@
   function LoginCtrl(AuthenticationService, currentAuth, $location) {
     var vm = this;
 
-    vm.partialNavbar = "/htmls/partials/navbar.html";
     vm.login = login;
 
     redirect();
