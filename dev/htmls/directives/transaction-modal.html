@@ -1,0 +1,43 @@
+<form name="transactionForm">
+  <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">{{vm.panelTitle}}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+              <div class="form-group">
+                <label>Date: </label>
+                <input id="transactionForm-firstField" type="date" class="form-control" ng-model="vm.panelTransactionAux.dateInput" required tabindex="1">
+              </div>
+              <div class="form-group">
+                <label>Description:</label>
+                <input type="text" class="form-control" placeholder="Description" ng-model="vm.panelTransaction.description" required tabindex="2">
+              </div>
+              <div class="form-group">
+                <label>Value:</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="number" class="form-control" step="0.01" ng-model="vm.panelTransaction.value" required tabindex="3">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select class="form-control" ng-model="vm.panelTransaction.category" name="categoryField" required tabindex="4">
+                  <option value=""></option>
+                  <option ng-repeat="category in vm.categories" value="{{category.$id}}">{{category.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" ng-click="vm.saveTransaction(vm.transactionType)" class="btn btn-danger" tabindex="5">{{vm.panelTitle}}</button>
+          <button type="button" ng-click="vm.cleanTransactionForm()" class="btn btn-success" data-dismiss="modal" tabindex="6">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

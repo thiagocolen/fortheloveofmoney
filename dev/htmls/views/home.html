@@ -1,5 +1,9 @@
-<div ng-include="partialNavbar"></div>
-<div ng-include="partialHomeChart"></div>
-<div ng-include="partialTransactionModal"></div>
-<div ng-include="partialCategoryModal"></div>
-<div ng-include="partialFooter"></div>
+<navbar-directive></navbar-directive>
+
+<chart-directive></chart-directive>
+
+<transaction-modal-directive transaction-type="transactionType"></transaction-modal-directive>
+
+<category-modal-directive category-type="categoryType"></category-modal-directive>
+
+<footer-directive></footer-directive>
