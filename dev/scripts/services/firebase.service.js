@@ -12,7 +12,8 @@
     var service = {
       saveTransaction: saveTransaction,
       deleteTransaction: deleteTransaction,
-      allCategories: allCategories
+      allCategories: allCategories,
+      saveCategory: saveCategory
     };
 
     return service;
@@ -69,6 +70,26 @@
       });
     }
 
-  }
+    function saveCategory(type, category) {
+      var Ref = firebase.database().ref();
+      var categories = $firebaseArray(Ref.child('/categories'));
 
+      if (type == 'add') {
+        categories.$add(category).then(function() {
+          $rootScope.$broadcast('cleanCategoryModal');
+        });
+      }
+
+      if (type == 'edit') {
+        categories.$loaded().then(function() {
+          var categoryRecord = categories.$getRecord(category.$id);
+          categoryRecord.name = category.name;
+          categories.$save(categoryRecord).then(function() {
+            $rootScope.$broadcast('cleanCategoryModal');
+          });
+        });
+      }
+    }
+
+  }
 })();

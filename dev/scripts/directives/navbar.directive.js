@@ -34,12 +34,7 @@
       }
 
       function manageCategories() {
-        $scope.$parent.categoryType = 'add';
-
-        $('#categoryModal').modal('show');
-        $('#categoryModal').on('shown.bs.modal', function(e) {
-          $('#categoryForm-firstField').focus();
-        });
+        $rootScope.$broadcast('manageCategories');
       }
 
       function logout() {
