@@ -16,8 +16,6 @@
 
     function link(scope, element, attrs) {
 
-      console.log('footer - directive');
-
     }
   }
 })();

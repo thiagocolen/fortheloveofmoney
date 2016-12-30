@@ -5,17 +5,15 @@
     .module('fortheloveofmoney')
     .directive('transactionModalDirective', transactionModalDirective);
 
-  transactionModalDirective.$inject = ['$firebaseArray'];
+  transactionModalDirective.$inject = ['$firebaseArray', 'FirebaseService'];
 
-  function transactionModalDirective($firebaseArray) {
+  function transactionModalDirective($firebaseArray, FirebaseService) {
     var directive = {
       bindToController: true,
       controller: transactionModalController,
       controllerAs: 'vm',
       restrict: 'EA',
-      scope: {
-        transactionType: '='
-      },
+      scope: { },
       templateUrl: '/htmls/directives/transaction-modal.html'
     };
 
@@ -23,61 +21,51 @@
 
     function transactionModalController($scope) {
       var vm = this;
-
       var Ref = firebase.database().ref();
 
-      vm.categories = $firebaseArray(Ref.child('/categories'));
-      vm.transactions = $firebaseArray(Ref.child('/transactions'));
       vm.panelTransaction = {};
       vm.panelTransactionAux = {};
-      vm.saveTransaction = saveTransaction;
-      vm.cleanTransactionForm = cleanTransactionForm;
-      vm.deleteTransaction = deleteTransaction;
-      vm.editTransaction = editTransaction;
       vm.panelTitle = 'New Transaction';
-      vm.transactionType = '';
+      // issue - será que tem um jeito melhor de fazer isso?
+      FirebaseService.allCategories().then(function (data) {
+        vm.categories = data;
+      });
+
+      vm.newTransaction = newTransaction;
+      vm.editTransaction = editTransaction;
+      vm.saveTransaction = saveTransaction;
+      vm.deleteTransaction = deleteTransaction;
+      vm.closeTransactionModal = closeTransactionModal;
+
+      $scope.$on('newTransaction', function(event, arg) {
+        vm.newTransaction();
+      });
+
+      $scope.$on('editTransaction', function(event, arg) {
+        vm.editTransaction(arg);
+      });
+
+      $scope.$on('deleteTransaction', function(event, arg) {
+        vm.deleteTransaction(arg);
+      });
+
+      $scope.$on('closeTransactionModal', function(event, arg) {
+        vm.closeTransactionModal();
+      });
+
 
       ////////////
 
-      function saveTransaction(type) {
-        console.log('saveTransaction');
-        if (type == 'add' && $scope.transactionForm.$valid == true) {
-          vm.panelTransaction.date = vm.panelTransactionAux.dateInput.toJSON();
-          vm.transactions.$add(vm.panelTransaction).then(function(ref) {
-            vm.panelTransactionAux = {};
-            vm.panelTransaction = {};
-            $('#transactionModal').modal('hide');
-          });
-        }
-        if (type == 'edit' && $scope.transactionForm.$valid == true) {
-          var transactionRecord = vm.transactions.$getRecord(vm.panelTransactionAux.id);
-          transactionRecord.date = vm.panelTransactionAux.dateInput.toJSON();
-          transactionRecord.description = vm.panelTransaction.description;
-          transactionRecord.value = vm.panelTransaction.value;
-          transactionRecord.category = vm.panelTransaction.category;
 
-          vm.transactions.$save(transactionRecord).then(function() {
-            vm.panelTransactionAux = {};
-            vm.panelTransaction = {};
-            $('#transactionModal').modal('hide');
-          });
-        }
-      }
-
-      function cleanTransactionForm() {
-        $('#transactionModal').on('hidden.bs.modal', function(e) {
-          vm.panelTransactionAux = {};
-          vm.panelTransaction = {};
-        });
-      }
-
-      function deleteTransaction(transaction) {
-        vm.transactions.$remove(transaction);
+      function newTransaction() {
+        vm.panelTitle = 'New Transaction';
+        vm.transactionType = 'newTransaction';
+        openTransactionModal();
       }
 
       function editTransaction(transaction) {
-        vm.transactionType = 'edit';
         vm.panelTitle = 'Edit Transaction';
+        vm.transactionType = 'editTransaction';
 
         vm.panelTransactionAux.id = transaction.$id;
 
@@ -90,14 +78,38 @@
         vm.panelTransaction.value = transaction.value;
         vm.panelTransaction.category = transaction.category;
 
+        openTransactionModal();
+      }
+
+      function saveTransaction(type) {
+        if ($scope.transactionForm.$valid == true) {
+          var transaction = {};
+          transaction.panelTransaction = vm.panelTransaction;
+          transaction.panelTransactionAux = vm.panelTransactionAux;
+          FirebaseService.saveTransaction(type, transaction);
+        }
+      }
+
+      function deleteTransaction(transactionId) {
+        FirebaseService.deleteTransaction(transactionId);
+      }
+
+      function closeTransactionModal() {
+        $('#transactionModal').modal('hide');
+        vm.panelTransaction = {};
+        vm.panelTransactionAux = {};
+      }
+
+      function openTransactionModal() {
         $('#transactionModal').modal('show');
         $('#transactionModal').on('shown.bs.modal', function(e) {
           $('#transactionForm-firstField').focus();
         });
       }
+
     }
 
     return directive;
-
+ 
   }
 })();

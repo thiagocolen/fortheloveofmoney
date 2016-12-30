@@ -5,9 +5,9 @@
     .module('fortheloveofmoney')
     .directive('navbarDirective', navbarDirective);
 
-  navbarDirective.$inject = ['$location', 'AuthenticationService'];
+  navbarDirective.$inject = ['$location', 'AuthenticationService', '$rootScope'];
 
-  function navbarDirective($location, AuthenticationService) {
+  function navbarDirective($location, AuthenticationService, $rootScope) {
     var directive = {
       bindToController: true,
       controller: navbarController,
@@ -30,12 +30,7 @@
       //////////////
 
       function newTransaction() {
-        $scope.$parent.transactionType = 'add';
-
-        $('#transactionModal').modal('show');
-        $('#transactionModal').on('shown.bs.modal', function(e) {
-          $('#transactionForm-firstField').focus();
-        });
+        $rootScope.$broadcast('newTransaction');
       }
 
       function manageCategories() {
