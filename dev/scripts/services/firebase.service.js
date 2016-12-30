@@ -14,7 +14,8 @@
       deleteTransaction: deleteTransaction,
       allCategories: allCategories,
       saveCategory: saveCategory,
-      allTransactions: allTransactions
+      allTransactions: allTransactions,
+      chartData: chartData
     };
 
     return service;
@@ -98,6 +99,36 @@
         var transactions = $firebaseArray(Ref.child('/transactions'));
         transactions.$loaded().then(function() {
           resolve(transactions)
+        });
+      });
+    }
+
+    function chartData() {
+      console.log('chartData');
+      return $q(function(resolve, reject) {
+        var Ref = firebase.database().ref();
+        var chartData;
+        Ref.child('/transactions').orderByChild("date").on("value", function(snapshot, $filter) {
+          var line = [];
+          var labels = [];
+          var currentBalance = 0;
+
+          snapshot.forEach(function(data) {
+            var chave = data.key;
+            var label = data.val().date;
+            currentBalance = data.val().value + currentBalance;
+            line.push(currentBalance);
+            labels.push(label.substr(0, 10));
+          });
+
+          chartData = {
+            line: line,
+            labels: labels,
+            currentBalance: currentBalance
+          }
+          resolve(chartData);
+        }, function(errorObject) {
+          console.log("The read failed: " + errorObject.code);
         });
       });
     }
