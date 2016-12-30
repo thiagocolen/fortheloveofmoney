@@ -5,17 +5,15 @@
     .module('fortheloveofmoney')
     .directive('categoryModalDirective', categoryModalDirective);
 
-  categoryModalDirective.$inject = ['$firebaseArray'];
+  categoryModalDirective.$inject = ['$firebaseArray', 'FirebaseService'];
 
-  function categoryModalDirective($firebaseArray) {
+  function categoryModalDirective($firebaseArray, FirebaseService) {
     var directive = {
       bindToController: true,
       controller: categoryModalController,
       controllerAs: 'vm',
       restrict: 'EA',
-      scope: {
-        categoryType: '='
-      },
+      scope: {},
       templateUrl: '/htmls/directives/category-modal.html'
     };
 
@@ -24,57 +22,59 @@
     function categoryModalController($scope) {
       var vm = this;
 
-      var Ref = firebase.database().ref();
-      vm.categories = $firebaseArray(Ref.child('/categories'));
+      // issue - será que tem um jeito melhor de fazer isso?
+      FirebaseService.allCategories().then(function (data) {
+        vm.categories = data;
+      });
 
       vm.panelCategory = {};
       vm.panelCategoryAux = {};
-      vm.categoryType = '';
+      vm.categoryType;
+
       vm.editCategory = editCategory;
       vm.saveCategory = saveCategory;
       vm.deleteCategory = deleteCategory;
-      vm.cleanCategoryForm = cleanCategoryForm;
+      vm.cleanCategoryModal = cleanCategoryModal;
+
+      $scope.$on('manageCategories', function(event, arg) {
+        openCategoryModal();
+      });
+
+      $scope.$on('cleanCategoryModal', function(event, arg) {
+        vm.cleanCategoryModal();
+      });
 
       ////////////
 
+      function openCategoryModal() {
+        vm.categoryType = 'add';        
+        $('#categoryModal').modal('show');
+        $('#categoryModal').on('shown.bs.modal', function(e) {
+          $('#categoryForm-firstField').focus();
+        });
+      }
+
       function editCategory(category) {
         vm.categoryType = 'edit';
-        vm.panelCategory.name = category.name;
-        vm.panelCategoryAux.id = category.$id;
-
+        vm.panelCategory = category;
         $('#categoryForm-firstField').focus();
       };
 
       function saveCategory() {
-        if (vm.categoryType == 'add' && $scope.categoryForm.$valid == true) {
-          var list = $firebaseArray(Ref.child('/categories'));
-
-          list.$add(vm.panelCategory).then(function() {
-            vm.cleanCategoryForm();
-            $('#categoryForm-firstField').focus();
-          });
+        if ($scope.categoryForm.$valid == true) {
+          FirebaseService.saveCategory(vm.categoryType, vm.panelCategory);
         }
-
-        if (vm.categoryType == 'edit' && $scope.categoryForm.$valid == true) {
-          var categoryRecord = vm.categories.$getRecord(vm.panelCategoryAux.id);
-          categoryRecord.name = vm.panelCategory.name;
-          vm.categories.$save(categoryRecord).then(function() {
-            vm.panelCategoryAux = {};
-            vm.panelCategory = {};
-          });
-        }
-
-        vm.categoryType = 'add';
       };
 
       function deleteCategory(category) {
-        vm.categories.$remove(category);        
+        vm.categories.$remove(category);
       };
 
-      function cleanCategoryForm() {
-        console.log('cleanCategoryForm');
+      function cleanCategoryModal() {
         vm.panelCategory = {};
         vm.panelCategoryAux = {};
+        vm.categoryType = 'add';
+        $('#categoryForm-firstField').focus();
       };
     }
 
