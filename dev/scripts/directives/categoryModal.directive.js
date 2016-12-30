@@ -13,9 +13,7 @@
       controller: categoryModalController,
       controllerAs: 'vm',
       restrict: 'EA',
-      scope: {
-        categoryType: '='
-      },
+      scope: {},
       templateUrl: '/htmls/directives/category-modal.html'
     };
 
