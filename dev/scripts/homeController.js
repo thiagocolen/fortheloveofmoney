@@ -14,15 +14,14 @@
       AuthenticationService.logout();
     }
 
-    var Ref = firebase.database().ref();
 
-
-    $scope.predicate = 'date';
-    $scope.reverse = true;
-    $scope.order = function(predicate) {
-      $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
-      $scope.predicate = predicate;
-    };
+    // var Ref = firebase.database().ref();
+    // $scope.predicate = 'date';
+    // $scope.reverse = true;
+    // $scope.order = function(predicate) {
+    //   $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+    //   $scope.predicate = predicate;
+    // };
 
     hotkeys.add({
       combo: 'alt+t',
