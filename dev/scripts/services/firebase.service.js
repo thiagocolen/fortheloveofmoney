@@ -13,7 +13,8 @@
       saveTransaction: saveTransaction,
       deleteTransaction: deleteTransaction,
       allCategories: allCategories,
-      saveCategory: saveCategory
+      saveCategory: saveCategory,
+      allTransactions: allTransactions
     };
 
     return service;
@@ -89,6 +90,16 @@
           });
         });
       }
+    }
+
+    function allTransactions() {
+      return $q(function(resolve, reject) {
+        var Ref = firebase.database().ref();
+        var transactions = $firebaseArray(Ref.child('/transactions'));
+        transactions.$loaded().then(function() {
+          resolve(transactions)
+        });
+      });
     }
 
   }

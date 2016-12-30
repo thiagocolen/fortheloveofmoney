@@ -26,24 +26,24 @@
           <tr>
             <th>
               <a href="" ng-click="vm.order('date')">Date</a>
-              <span class="sortorder glyphicon" ng-show="vm.predicate === 'date'" ng-class="{reverse:reverse}"></span>
+              <span class="sortorder glyphicon" ng-show="vm.predicate === 'date'" ng-class="{reverse:vm.reverse}"></span>
             </th>
             <th>
               <a href="" ng-click="vm.order('description')">Description</a>
-              <span class="sortorder glyphicon" ng-show="vm.predicate === 'description'" ng-class="{reverse:reverse}"></span>
+              <span class="sortorder glyphicon" ng-show="vm.predicate === 'description'" ng-class="{reverse:vm.reverse}"></span>
             </th>
             <th>
               <a href="" ng-click="vm.order('value')">Value</a>
-              <span class="sortorder glyphicon" ng-show="vm.predicate === 'value'" ng-class="{reverse:reverse}"></span>
+              <span class="sortorder glyphicon" ng-show="vm.predicate === 'value'" ng-class="{reverse:vm.reverse}"></span>
             </th>
             <th>
               <a href="" ng-click="vm.order('category')">Category</a>
-              <span class="sortorder glyphicon" ng-show="vm.predicate === 'category'" ng-class="{reverse:reverse}"></span>
+              <span class="sortorder glyphicon" ng-show="vm.predicate === 'category'" ng-class="{reverse:vm.reverse}"></span>
             </th>
             <th></th>
             <th></th>
           </tr>
-          <tr ng-repeat="transaction in vm.transactions | orderBy:vm.predicate:reverse">
+          <tr ng-repeat="transaction in vm.transactions | orderBy:vm.predicate:vm.reverse">
             <td>{{transaction.date | date: 'yyyy/MM/dd'}}</td>
             <td>{{transaction.description}}</td>
             <td>{{transaction.value | currency}}</td>

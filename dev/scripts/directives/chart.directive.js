@@ -5,9 +5,9 @@
     .module('fortheloveofmoney')
     .directive('chartDirective', chartDirective);
 
-  chartDirective.$inject = ['$firebaseArray','$rootScope'];
+  chartDirective.$inject = ['$firebaseArray', '$rootScope', 'FirebaseService'];
 
-  function chartDirective($firebaseArray, $rootScope) {
+  function chartDirective($firebaseArray, $rootScope, FirebaseService) {
     var directive = {
       bindToController: true,
       controller: chartDirectiveController,
@@ -19,11 +19,14 @@
 
     chartDirectiveController.$inject = ['$scope'];
 
-    function chartDirectiveController($scope) {      
-      var Ref = firebase.database().ref();
+    function chartDirectiveController($scope) {
       var vm = this;
 
-      vm.transactions = $firebaseArray(Ref.child('/transactions'));
+      // issue - será que tem um jeito melhor de fazer isso?
+      FirebaseService.allTransactions().then(function (data) {
+        vm.transactions = data;
+      });
+
       vm.currentBalance = 0;
       vm.predicate = 'date';
       vm.reverse = true;
@@ -31,7 +34,9 @@
       vm.order = order;
       vm.editTransaction = editTransaction;
       vm.deleteTransaction = deleteTransaction;
-      
+      vm.order = order;
+
+      var Ref = firebase.database().ref();
       Ref.child('/transactions').orderByChild("date").on("value", function(snapshot, $filter) {
         // chart-labels="labels" 
         vm.labels = [];
@@ -76,8 +81,13 @@
         $rootScope.$broadcast('editTransaction', transaction);
       }
 
-      function deleteTransaction (transactionId) {
+      function deleteTransaction(transactionId) {
         $rootScope.$broadcast('deleteTransaction', transactionId);
+      }
+
+      function order(predicate) {
+        vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
+        vm.predicate = predicate;
       }
 
     }
