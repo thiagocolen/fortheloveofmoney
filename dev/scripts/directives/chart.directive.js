@@ -22,27 +22,27 @@
     function chartDirectiveController($scope) {
       var vm = this;
 
-      vm.series = ["Conta-Corrente"];
-      vm.chartColours = ['#333745', '#77C4D3', '#DAEDE2', '#F6F792', '#EA2E49', '#333745', '#77C4D3'];
       // issue - será que tem um jeito melhor de fazer isso?
       FirebaseService.chartData().then(function(data) {
-        console.log('data: ', data);
-        vm.line = data.line;
+        vm.series = ["Conta-Corrente"];
+        vm.chartColours = ['#333745', '#77C4D3', '#DAEDE2', '#F6F792', '#EA2E49', '#333745', '#77C4D3'];
+        vm.line = [];
+        vm.line.push(data.line);
         vm.currentBalance = data.currentBalance;
         vm.labels = data.labels;
       });
-      // issue - será que tem um jeito melhor de fazer isso?
-      
+      // issue - será que tem um jeito melhor de fazer isso?      
       FirebaseService.allTransactions().then(function(data) {
         vm.transactions = data;
       });
+
       vm.predicate = 'date';
       vm.reverse = true;
 
       vm.editTransaction = editTransaction;
       vm.deleteTransaction = deleteTransaction;
       vm.order = order;
-      
+
       ////////////////
 
       function editTransaction(transaction) {

@@ -30,7 +30,7 @@ gulp.task('dependencies', function() {
       './node_modules/angular-route/angular-route.js',
       './node_modules/firebase/firebase.js',
       './node_modules/angularfire/dist/angularfire.js',
-      './node_modules/chart.js/dist/Chart.js',
+      './node_modules/chart.js/Chart.js',
       './node_modules/angular-chart.js/dist/angular-chart.js',
       './node_modules/angular-hotkeys/build/hotkeys.js'
     ])

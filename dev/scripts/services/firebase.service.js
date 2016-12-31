@@ -104,7 +104,6 @@
     }
 
     function chartData() {
-      console.log('chartData');
       return $q(function(resolve, reject) {
         var Ref = firebase.database().ref();
         var chartData;
