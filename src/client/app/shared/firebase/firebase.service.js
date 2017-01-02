@@ -5,9 +5,9 @@
     .module('fortheloveofmoney')
     .service('FirebaseService', FirebaseService);
 
-  FirebaseService.$inject = ['$firebaseArray', '$rootScope', '$q'];
+  FirebaseService.$inject = ['$firebaseArray', '$rootScope', '$q', 'localStorageService'];
 
-  function FirebaseService($firebaseArray, $rootScope, $q) {
+  function FirebaseService($firebaseArray, $rootScope, $q, localStorageService) {
 
     var service = {
       saveTransaction: saveTransaction,
@@ -15,7 +15,9 @@
       allCategories: allCategories,
       saveCategory: saveCategory,
       allTransactions: allTransactions,
-      chartData: chartData
+      chartData: chartData,
+      userVerification: userVerification,
+      loggedUserId: loggedUserId
     };
 
     return service;
@@ -130,6 +132,34 @@
           console.log("The read failed: " + errorObject.code);
         });
       });
+    }
+
+    function userVerification(user) {
+      var Ref = firebase.database().ref();
+      var users = $firebaseArray(Ref.child('/users'));
+      var newUser;
+
+      users.$loaded().then(function() {
+        angular.forEach(users, function(value, key) {
+          if (value.uid == user.uid) {
+            newUser = false;
+          }
+        });
+        if (newUser != false) {
+          users.$add(user).then(function(ref) {
+            console.log('$added user: ', user);
+          });
+        }
+      });
+    }
+// firebase:authUser:AIzaSyBRQPk951Ca2REMDC-OeUBPLuNLZwbAPKw:[DEFAULT]
+    function loggedUserId() {
+      var teste = localStorageService.length();
+      console.log('teste: ', teste);
+      localStorageService.set('USERID', {
+        // 'asdasd' : '13123'
+      });
+      // console.log('loggedUserId: ', loggedUserId);
     }
 
   }

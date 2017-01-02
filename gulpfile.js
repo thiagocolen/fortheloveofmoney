@@ -28,6 +28,7 @@ gulp.task('dependencies', function() {
       './node_modules/bootstrap/dist/js/bootstrap.js',
       './node_modules/angular/angular.js',
       './node_modules/angular-route/angular-route.js',
+      './node_modules/angular-local-storage/dist/angular-local-storage.js',
       './node_modules/firebase/firebase.js',
       './node_modules/angularfire/dist/angularfire.js',
       './node_modules/chart.js/Chart.js',

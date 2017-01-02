@@ -15,4 +15,13 @@
       });
     }]);
 
+
+  angular
+    .module('fortheloveofmoney')
+    .config(['localStorageServiceProvider', function (localStorageServiceProvider) {
+      localStorageServiceProvider
+        .setStorageType('localStorage')
+        .setPrefix('fortheloveofmoney');
+    }]);
+
 })();

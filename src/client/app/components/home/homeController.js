@@ -5,14 +5,18 @@
     .module('fortheloveofmoney')
     .controller('HomeCtrl', HomeCtrl);
 
-  HomeCtrl.$inject = ['$scope', '$firebaseArray', '$firebaseObject', '$filter', 'hotkeys', 'currentAuth', 'AuthenticationService'];
+  HomeCtrl.$inject = ['$scope', '$firebaseArray', '$firebaseObject', '$filter', 'hotkeys', 'currentAuth', 'AuthenticationService', 'FirebaseService'];
 
-  function HomeCtrl($scope, $firebaseArray, $firebaseObject, $filter, hotkeys, currentAuth, AuthenticationService) {
+  function HomeCtrl($scope, $firebaseArray, $firebaseObject, $filter, hotkeys, currentAuth, AuthenticationService, FirebaseService) {
 
     $scope.logout = function() {
       console.log('logout at home');
       AuthenticationService.logout();
     }
+
+    FirebaseService.loggedUserId();
+
+
 
     hotkeys.add({
       combo: 'alt+t',
