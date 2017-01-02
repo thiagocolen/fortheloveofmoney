@@ -3,23 +3,23 @@
 
   angular
     .module('fortheloveofmoney')
-    .directive('categoryModalDirective', categoryModalDirective);
+    .directive('categoryManagerDirective', categoryManagerDirective);
 
-  categoryModalDirective.$inject = ['$firebaseArray', 'FirebaseService'];
+  categoryManagerDirective.$inject = ['$firebaseArray', 'FirebaseService'];
 
-  function categoryModalDirective($firebaseArray, FirebaseService) {
+  function categoryManagerDirective($firebaseArray, FirebaseService) {
     var directive = {
       bindToController: true,
-      controller: categoryModalController,
+      controller: categoryManagerController,
       controllerAs: 'vm',
       restrict: 'EA',
       scope: {},
-      templateUrl: '/htmls/directives/category-modal.html'
+      templateUrl: 'assets/htmls/shared/categories/categories.html'
     };
 
-    categoryModalController.$inject = ['$scope'];
+    categoryManagerController.$inject = ['$scope'];
 
-    function categoryModalController($scope) {
+    function categoryManagerController($scope) {
       var vm = this;
 
       // issue - será que tem um jeito melhor de fazer isso?

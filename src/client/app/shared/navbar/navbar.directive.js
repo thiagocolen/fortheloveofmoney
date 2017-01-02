@@ -13,7 +13,7 @@
       controller: navbarController,
       controllerAs: 'vm',
       restrict: 'EA',
-      templateUrl: '/htmls/directives/navbar.html',
+      templateUrl: 'assets/htmls/shared/navbar/navbar.html',
       scope: {}
     };
 

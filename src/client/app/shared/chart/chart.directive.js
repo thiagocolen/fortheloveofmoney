@@ -14,7 +14,7 @@
       controllerAs: 'vm',
       restrict: 'EA',
       scope: {},
-      templateUrl: '/htmls/directives/chart.html'
+      templateUrl: 'assets/htmls/shared/chart/chart.html'
     };
 
     chartDirectiveController.$inject = ['$scope'];
@@ -25,7 +25,7 @@
       // issue - será que tem um jeito melhor de fazer isso?
       FirebaseService.chartData().then(function(data) {
         vm.series = ["Conta-Corrente"];
-        vm.chartColours = ['#333745', '#77C4D3', '#DAEDE2', '#F6F792', '#EA2E49', '#333745', '#77C4D3'];
+        vm.chartColors = ['#333745', '#77C4D3', '#DAEDE2', '#F6F792', '#EA2E49', '#333745', '#77C4D3'];
         vm.line = [];
         vm.line.push(data.line);
         vm.currentBalance = data.currentBalance;
@@ -57,7 +57,6 @@
         vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
         vm.predicate = predicate;
       }
-
     }
 
     return directive;

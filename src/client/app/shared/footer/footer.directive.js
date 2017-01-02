@@ -9,7 +9,7 @@
     var directive = {
       link: link,
       restrict: 'EA',
-      templateUrl: '/htmls/directives/footer.html',
+      templateUrl: 'assets/htmls/shared/footer/footer.html',
       scope: {}
     };
     return directive;
