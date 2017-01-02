@@ -6,8 +6,8 @@
     .config(['$routeProvider',
       function($routeProvider) {
         $routeProvider.
-        when('/home', {
-          templateUrl: 'htmls/views/home.html',
+        when('/home', {          
+          templateUrl: 'assets/htmls/components/home/home.html',
           controller: 'HomeCtrl',
           resolve: {
             // controller will not be loaded until $waitForSignIn resolves
@@ -19,7 +19,7 @@
           }
         }).
         when('/login', {
-          templateUrl: 'htmls/views/login.html',
+          templateUrl: 'assets/htmls/components/login/login.html',
           controller: 'LoginCtrl',
           controllerAs: 'vm',
           resolve: {

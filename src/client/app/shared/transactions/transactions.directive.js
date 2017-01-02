@@ -3,18 +3,18 @@
 
   angular
     .module('fortheloveofmoney')
-    .directive('transactionModalDirective', transactionModalDirective);
+    .directive('transactionManagerDirective', transactionManagerDirective);
 
-  transactionModalDirective.$inject = ['$firebaseArray', 'FirebaseService'];
+  transactionManagerDirective.$inject = ['$firebaseArray', 'FirebaseService'];
 
-  function transactionModalDirective($firebaseArray, FirebaseService) {
+  function transactionManagerDirective($firebaseArray, FirebaseService) {
     var directive = {
       bindToController: true,
       controller: transactionModalController,
       controllerAs: 'vm',
       restrict: 'EA',
       scope: { },
-      templateUrl: '/htmls/directives/transaction-modal.html'
+      templateUrl: 'assets/htmls/shared/transactions/transactions.html'
     };
 
     transactionModalController.$inject = ['$scope'];
