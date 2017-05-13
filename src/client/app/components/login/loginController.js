@@ -14,7 +14,7 @@
 
     redirect();
 
-    ////////////
+    // ----------
 
     function login() {
       var result = AuthenticationService.login();
@@ -26,5 +26,4 @@
       }
     }
   }
-
 })();
