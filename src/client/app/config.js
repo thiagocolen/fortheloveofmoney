@@ -1,9 +1,9 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('fortheloveofmoney')
-    .config(['ChartJsProvider', function(ChartJsProvider) {
+    .config(['ChartJsProvider', function (ChartJsProvider) {
       // Configure all charts
       ChartJsProvider.setOptions({
         chartColors: ['red', 'green'],
@@ -18,10 +18,11 @@
 
   angular
     .module('fortheloveofmoney')
-    .config(['localStorageServiceProvider', function (localStorageServiceProvider) {
-      localStorageServiceProvider
-        .setStorageType('localStorage')
-        .setPrefix('fortheloveofmoney');
-    }]);
-
+    .config([
+      'localStorageServiceProvider',
+      function (localStorageServiceProvider) {
+        localStorageServiceProvider
+          .setStorageType('localStorage')
+          .setPrefix('fortheloveofmoney');
+      }]);
 })();

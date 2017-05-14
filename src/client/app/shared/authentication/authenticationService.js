@@ -1,14 +1,23 @@
-(function() {
-  'use strict'; 
+(function () {
+  'use strict';
 
   angular
     .module('fortheloveofmoney')
     .service('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$firebaseAuth', '$location', '$firebaseObject', 'FirebaseService'];
+  AuthenticationService.$inject = [
+    '$firebaseAuth',
+    '$location',
+    '$firebaseObject',
+    'FirebaseService'
+  ];
 
-  function AuthenticationService($firebaseAuth, $location, $firebaseObject, FirebaseService) {
-
+  function AuthenticationService(
+    $firebaseAuth,
+    $location,
+    $firebaseObject,
+    FirebaseService
+  ) {
     var service = {
       login: login,
       logout: logout
@@ -18,21 +27,21 @@
 
     function login() {
       var authObj = $firebaseAuth();
-      authObj.$signInWithPopup("google").then(function(result) {
+      authObj.$signInWithPopup('google').then(function (result) {
         verifyNewUser(result);
         $location.url('/home');
-      }).catch(function(error) {
-        console.error("Authentication failed:", error);
+      }).catch(function (error) {
+        console.error('Authentication failed:', error);
       });
     }
 
     function logout() {
       var authObj = $firebaseAuth();
       authObj.$signOut().then(function () {
-        $location.url('/login');  
+        $location.url('/login');
       });
     }
-    
+
     function verifyNewUser(data) {
       var user = {};
       user.displayName = data.user.displayName;
@@ -40,5 +49,4 @@
       FirebaseService.userVerification(user);
     }
   }
-
 })();

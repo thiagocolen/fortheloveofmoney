@@ -15,17 +15,15 @@
           var categoryName;
           var Ref = firebase.database().ref();
 
-          Ref.child('/categories/' + category).on("value", function(snapshot) {
+          Ref.child('/categories/' + category).on('value', function(snapshot) {
             // console.log(snapshot.val().name);
             categoryName = snapshot.val().name;
-
           }, function(errorObject) {
-            console.log("The read failed: " + errorObject.code);
+            console.log('The read failed: ' + errorObject.code);
           });
 
           return categoryName;
         };
       }
     ]);
-
 })();
