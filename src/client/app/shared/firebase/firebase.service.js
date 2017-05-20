@@ -8,15 +8,13 @@
   FirebaseService.$inject = [
     '$firebaseArray',
     '$rootScope',
-    '$q',
-    'localStorageService'
+    '$q'
   ];
 
   function FirebaseService(
     $firebaseArray,
     $rootScope,
-    $q,
-    localStorageService
+    $q
   ) {
     var service = {
       saveTransaction: saveTransaction,
@@ -173,16 +171,6 @@
           });
         }
       });
-    }
-    // firebase:authUser:AIzaSyBRQPk951Ca2REMDC-OeUBPLuNLZwbAPKw:[DEFAULT]
-    function loggedUserId() {
-      console.log('localStorageService:', localStorageService);
-      var teste = localStorageService.length();
-      console.log('teste: ', teste);
-      localStorageService.set('USERID', {
-        // 'asdasd' : '13123'
-      });
-      // console.log('loggedUserId: ', loggedUserId);
     }
   }
 })();
