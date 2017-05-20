@@ -21,7 +21,6 @@
 
     function transactionModalController($scope) {
       var vm = this;
-      var Ref = firebase.database().ref();
 
       vm.panelTransaction = {};
       vm.panelTransactionAux = {};
@@ -54,7 +53,7 @@
       });
 
 
-      ////////////
+      // //////////
 
 
       function newTransaction() {
@@ -106,10 +105,8 @@
           $('#transactionForm-firstField').focus();
         });
       }
-
     }
 
     return directive;
- 
   }
 })();

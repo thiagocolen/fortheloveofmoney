@@ -23,8 +23,7 @@
       saveCategory: saveCategory,
       allTransactions: allTransactions,
       chartData: chartData,
-      userVerification: userVerification,
-      loggedUserId: loggedUserId
+      userVerification: userVerification
     };
 
     return service;

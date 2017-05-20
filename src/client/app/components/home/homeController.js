@@ -9,6 +9,7 @@
     '$firebaseArray',
     '$firebaseObject',
     '$filter',
+    '$rootScope',
     'hotkeys',
     'currentAuth'];
 
@@ -16,6 +17,7 @@
     $firebaseArray,
     $firebaseObject,
     $filter,
+    $rootScope,
     hotkeys,
     currentAuth
   ) {
@@ -26,7 +28,8 @@
       combo: 'alt+t',
       description: 'Add New Transaction',
       callback: function () {
-        $scope.newTransaction();
+        $rootScope.$broadcast('newTransaction');
+        // $scope.newTransaction();
       }
     });
 
@@ -34,7 +37,8 @@
       combo: 'alt+c',
       description: 'Manage Categories',
       callback: function () {
-        $scope.manageCategories();
+        $rootScope.$broadcast('manageCategories');
+        // $scope.manageCategories();
       }
     });
   }
