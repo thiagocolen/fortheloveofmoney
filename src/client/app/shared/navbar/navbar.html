@@ -14,7 +14,6 @@
     </div>
     <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li>olá userName</li>
         <li>
           <a href="" ng-click="vm.newTransaction()" ng-hide="vm.signOutNavbarState()">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp; Create Transaction
@@ -28,6 +27,19 @@
         <li>
           <a href="" ng-click="vm.logout()" ng-hide="vm.signOutNavbarState()">
             <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> &nbsp; logout
+          </a>
+        </li>
+        <li>
+          &nbsp;
+        </li>
+        <li>
+          <a href="">
+            <span>Olá, {{vm.currentAuth.displayName}}</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img ng-src="{{vm.currentAuth.photoURL}}" width="16" alt=""> 
           </a>
         </li>
         <li>
