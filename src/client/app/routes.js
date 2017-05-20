@@ -9,6 +9,7 @@
           when('/home', {
             templateUrl: 'assets/htmls/components/home/home.html',
             controller: 'HomeCtrl',
+            controllerAs: 'vm',
             resolve: {
               // controller will not be loaded until $waitForSignIn resolves
               // Auth refers to our $firebaseAuth wrapper in the factory below
