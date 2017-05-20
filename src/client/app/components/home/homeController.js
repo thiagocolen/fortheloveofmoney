@@ -6,31 +6,21 @@
     .controller('HomeCtrl', HomeCtrl);
 
   HomeCtrl.$inject = [
-    '$scope',
     '$firebaseArray',
     '$firebaseObject',
     '$filter',
     'hotkeys',
-    'currentAuth',
-    'AuthenticationService',
-    'FirebaseService'];
+    'currentAuth'];
 
   function HomeCtrl(
-    $scope,
     $firebaseArray,
     $firebaseObject,
     $filter,
     hotkeys,
-    currentAuth,
-    AuthenticationService,
-    FirebaseService
+    currentAuth
   ) {
-    $scope.logout = function () {
-      console.log('logout at home');
-      AuthenticationService.logout();
-    };
-
-    FirebaseService.loggedUserId();
+    var vm = this;
+    vm.currentAuth = currentAuth;
 
     hotkeys.add({
       combo: 'alt+t',
