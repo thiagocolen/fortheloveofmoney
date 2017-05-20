@@ -13,7 +13,9 @@
       controller: transactionModalController,
       controllerAs: 'vm',
       restrict: 'EA',
-      scope: { },
+      scope: {
+        currentAuth: '='
+      },
       templateUrl: 'assets/htmls/shared/transactions/transactions.html'
     };
 
@@ -85,7 +87,7 @@
           var transaction = {};
           transaction.panelTransaction = vm.panelTransaction;
           transaction.panelTransactionAux = vm.panelTransactionAux;
-          FirebaseService.saveTransaction(type, transaction);
+          FirebaseService.saveTransaction(type, transaction, vm.currentAuth);
         }
       }
 
