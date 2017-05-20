@@ -28,19 +28,28 @@
 
     return service;
 
-    function saveTransaction(type, transaction) {
+
+    function saveTransaction(type, transaction, currentAuth) {
       var Ref = firebase.database().ref();
       var transactions = $firebaseArray(Ref.child('/transactions'));
+      var users = $firebaseArray(Ref.child('/users'));
 
       if (type == 'newTransaction') {
         // issue - this line is a shit
         transaction.panelTransaction.date =
           transaction.panelTransactionAux.dateInput.toJSON();
-        transactions.$loaded().then(function () {
-          transactions.$add(transaction.panelTransaction).then(function (ref) {
-            $rootScope.$broadcast('closeTransactionModal');
-          });
 
+        users.$loaded().then(function () {
+          angular.forEach(users, function (value, key) {
+            if (value.uid == currentAuth.uid) {
+              transaction.panelTransaction.owner = value.$id;
+              transactions.$loaded().then(function () {
+                transactions.$add(transaction.panelTransaction).then(function (ref) {
+                  $rootScope.$broadcast('closeTransactionModal');
+                });
+              });
+            }
+          });
         });
       }
 
