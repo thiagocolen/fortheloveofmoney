@@ -24,25 +24,25 @@
     function chartDirectiveController($scope) {
       var vm = this;
 
-      // issue - será que tem um jeito melhor de fazer isso?
-      FirebaseService.chartData().then(function (data) {
-        vm.series = ['Conta-Corrente'];
-        vm.chartColors = [
-          '#333745',
-          '#77C4D3',
-          '#DAEDE2',
-          '#F6F792',
-          '#EA2E49',
-          '#333745',
-          '#77C4D3'
-        ];
-        vm.line = [];
-        vm.line.push(data.line);
-        vm.currentBalance = data.currentBalance;
-        vm.labels = data.labels;
-      });
-      // issue - será que tem um jeito melhor de fazer isso?
       $scope.$watch('vm.currentAuth', function (current, original) {
+        // issue - será que tem um jeito melhor de fazer isso?
+        FirebaseService.chartData(vm.currentAuth).then(function (data) {
+          vm.series = ['Conta-Corrente'];
+          vm.chartColors = [
+            '#333745',
+            '#77C4D3',
+            '#DAEDE2',
+            '#F6F792',
+            '#EA2E49',
+            '#333745',
+            '#77C4D3'
+          ];
+          vm.line = [];
+          vm.line.push(data.line);
+          vm.currentBalance = data.currentBalance;
+          vm.labels = data.labels;
+        });
+        // issue - será que tem um jeito melhor de fazer isso?
         FirebaseService.allTransactions(vm.currentAuth).then(function (data) {
           vm.transactions = data;
         });
