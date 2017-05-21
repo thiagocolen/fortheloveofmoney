@@ -29,26 +29,37 @@
     return service;
 
 
+    function getCurrentUserOwnerKey(currentAuth) {
+      return $q(function (resolve, reject) {
+        var Ref = firebase.database().ref();
+        var users = $firebaseArray(Ref.child('/users'));
+
+        users.$loaded().then(function () {
+          angular.forEach(users, function (value, key) {
+            if (value.uid == currentAuth.uid) {
+              resolve(value.$id);
+            }
+          });
+        });
+      });
+    }
+
     function saveTransaction(type, transaction, currentAuth) {
       var Ref = firebase.database().ref();
       var transactions = $firebaseArray(Ref.child('/transactions'));
-      var users = $firebaseArray(Ref.child('/users'));
 
       if (type == 'newTransaction') {
         // issue - this line is a shit
         transaction.panelTransaction.date =
           transaction.panelTransactionAux.dateInput.toJSON();
 
-        users.$loaded().then(function () {
-          angular.forEach(users, function (value, key) {
-            if (value.uid == currentAuth.uid) {
-              transaction.panelTransaction.owner = value.$id;
-              transactions.$loaded().then(function () {
-                transactions.$add(transaction.panelTransaction).then(function (ref) {
-                  $rootScope.$broadcast('closeTransactionModal');
-                });
+        getCurrentUserOwnerKey(currentAuth).then(function (result) {
+          transaction.panelTransaction.owner = result;
+          transactions.$loaded().then(function () {
+            transactions.$add(transaction.panelTransaction)
+              .then(function (ref) {
+                $rootScope.$broadcast('closeTransactionModal');
               });
-            }
           });
         });
       }
@@ -89,23 +100,30 @@
       });
     }
 
-    function allCategories() {
+    function allCategories(currentAuth) {
       return $q(function (resolve, reject) {
         var Ref = firebase.database().ref();
-        var categories = $firebaseArray(Ref.child('/categories'));
-        categories.$loaded().then(function () {
-          resolve(categories);
+
+        getCurrentUserOwnerKey(currentAuth).then(function (result) {
+          var categories = $firebaseArray(Ref.child('/categories')
+            .orderByChild('owner').equalTo(result));
+          categories.$loaded().then(function () {
+            resolve(categories);
+          });
         });
       });
     }
 
-    function saveCategory(type, category) {
+    function saveCategory(type, category, currentAuth) {
       var Ref = firebase.database().ref();
       var categories = $firebaseArray(Ref.child('/categories'));
 
       if (type == 'add') {
-        categories.$add(category).then(function () {
-          $rootScope.$broadcast('cleanCategoryModal');
+        getCurrentUserOwnerKey(currentAuth).then(function (result) {
+          category.owner = result;
+          categories.$add(category).then(function () {
+            $rootScope.$broadcast('cleanCategoryModal');
+          });
         });
       }
 
@@ -123,28 +141,32 @@
     function allTransactions(currentAuth) {
       return $q(function (resolve, reject) {
         var Ref = firebase.database().ref();
-        var users = $firebaseArray(Ref.child('/users'));
 
-        users.$loaded().then(function () {
-          angular.forEach(users, function (value, key) {
-            if (value.uid == currentAuth.uid) {
-              var transactions = $firebaseArray(Ref.child('/transactions').orderByChild('owner').equalTo(value.$id));
-              transactions.$loaded().then(function () {
-                resolve(transactions);
-              });
-            }
+        getCurrentUserOwnerKey(currentAuth).then(function (result) {
+          var transactions = $firebaseArray(Ref.child('/transactions')
+            .orderByChild('owner').equalTo(result));
+          transactions.$loaded().then(function () {
+            resolve(transactions);
           });
         });
       });
     }
 
-    function chartData() {
+    function chartData(currentAuth) {
       return $q(function (resolve, reject) {
         var Ref = firebase.database().ref();
         var chartData;
-        Ref
-          .child('/transactions')
-          .orderByChild('date')
+
+        getCurrentUserOwnerKey(currentAuth).then(function (result) {
+          var transactions = $firebaseArray(Ref.child('/transactions')
+            .orderByChild('owner').equalTo(result));
+          transactions.$loaded().then(function () {
+            console.log('!!!@@@', 'transactions:', transactions);
+            // resolve(transactions);
+          });
+        });
+
+        Ref.child('/transactions').orderByChild('date')
           .on('value', function (snapshot, $filter) {
             var line = [];
             var labels = [];
