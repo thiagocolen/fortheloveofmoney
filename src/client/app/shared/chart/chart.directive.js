@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -13,7 +13,9 @@
       controller: chartDirectiveController,
       controllerAs: 'vm',
       restrict: 'EA',
-      scope: {},
+      scope: {
+        currentAuth: '='
+      },
       templateUrl: 'assets/htmls/shared/chart/chart.html'
     };
 
@@ -23,17 +25,27 @@
       var vm = this;
 
       // issue - será que tem um jeito melhor de fazer isso?
-      FirebaseService.chartData().then(function(data) {
-        vm.series = ["Conta-Corrente"];
-        vm.chartColors = ['#333745', '#77C4D3', '#DAEDE2', '#F6F792', '#EA2E49', '#333745', '#77C4D3'];
+      FirebaseService.chartData().then(function (data) {
+        vm.series = ['Conta-Corrente'];
+        vm.chartColors = [
+          '#333745',
+          '#77C4D3',
+          '#DAEDE2',
+          '#F6F792',
+          '#EA2E49',
+          '#333745',
+          '#77C4D3'
+        ];
         vm.line = [];
         vm.line.push(data.line);
         vm.currentBalance = data.currentBalance;
         vm.labels = data.labels;
       });
-      // issue - será que tem um jeito melhor de fazer isso?      
-      FirebaseService.allTransactions().then(function(data) {
-        vm.transactions = data;
+      // issue - será que tem um jeito melhor de fazer isso?
+      $scope.$watch('vm.currentAuth', function (current, original) {
+        FirebaseService.allTransactions(vm.currentAuth).then(function (data) {
+          vm.transactions = data;
+        });
       });
 
       vm.predicate = 'date';
@@ -43,7 +55,7 @@
       vm.deleteTransaction = deleteTransaction;
       vm.order = order;
 
-      ////////////////
+      // //////////////
 
       function editTransaction(transaction) {
         $rootScope.$broadcast('editTransaction', transaction);
@@ -60,6 +72,5 @@
     }
 
     return directive;
-
   }
 })();
