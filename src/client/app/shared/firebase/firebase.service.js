@@ -120,12 +120,20 @@
       }
     }
 
-    function allTransactions() {
+    function allTransactions(currentAuth) {
       return $q(function (resolve, reject) {
         var Ref = firebase.database().ref();
-        var transactions = $firebaseArray(Ref.child('/transactions'));
-        transactions.$loaded().then(function () {
-          resolve(transactions)
+        var users = $firebaseArray(Ref.child('/users'));
+
+        users.$loaded().then(function () {
+          angular.forEach(users, function (value, key) {
+            if (value.uid == currentAuth.uid) {
+              var transactions = $firebaseArray(Ref.child('/transactions').orderByChild('owner').equalTo(value.$id));
+              transactions.$loaded().then(function () {
+                resolve(transactions);
+              });
+            }
+          });
         });
       });
     }
