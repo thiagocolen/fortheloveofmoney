@@ -29,7 +29,6 @@
       description: 'Add New Transaction',
       callback: function () {
         $rootScope.$broadcast('newTransaction');
-        // $scope.newTransaction();
       }
     });
 
@@ -38,7 +37,6 @@
       description: 'Manage Categories',
       callback: function () {
         $rootScope.$broadcast('manageCategories');
-        // $scope.manageCategories();
       }
     });
   }
