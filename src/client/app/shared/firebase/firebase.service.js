@@ -161,21 +161,18 @@
           var transactions = $firebaseArray(Ref.child('/transactions')
             .orderByChild('owner').equalTo(result));
           transactions.$loaded().then(function () {
-            console.log('!!!@@@', 'transactions:', transactions);
-            // resolve(transactions);
-          });
-        });
-
-        Ref.child('/transactions').orderByChild('date')
-          .on('value', function (snapshot, $filter) {
             var line = [];
             var labels = [];
             var currentBalance = 0;
 
-            snapshot.forEach(function (data) {
+            transactions.sort(function (a, b) {
+              return new Date(a.date).getTime() - new Date(b.date).getTime();
+            });
+
+            transactions.forEach(function (data) {
               // var chave = data.key;
-              var label = data.val().date;
-              currentBalance = data.val().value + currentBalance;
+              var label = data.date;
+              currentBalance = data.value + currentBalance;
               line.push(currentBalance);
               labels.push(label.substr(0, 10));
             });
@@ -185,10 +182,10 @@
               labels: labels,
               currentBalance: currentBalance
             };
+
             resolve(chartData);
-          }, function (errorObject) {
-            console.log('The read failed: ' + errorObject.code);
           });
+        });
       });
     }
 
