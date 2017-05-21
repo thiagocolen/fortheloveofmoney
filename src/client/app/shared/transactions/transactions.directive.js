@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -27,9 +27,12 @@
       vm.panelTransaction = {};
       vm.panelTransactionAux = {};
       vm.panelTitle = 'New Transaction';
+
       // issue - será que tem um jeito melhor de fazer isso?
-      FirebaseService.allCategories().then(function (data) {
-        vm.categories = data;
+      $scope.$watch('vm.currentAuth', function (current, original) {
+        FirebaseService.allCategories(vm.currentAuth).then(function (data) {
+          vm.categories = data;
+        });
       });
 
       vm.newTransaction = newTransaction;
@@ -38,19 +41,19 @@
       vm.deleteTransaction = deleteTransaction;
       vm.closeTransactionModal = closeTransactionModal;
 
-      $scope.$on('newTransaction', function(event, arg) {
+      $scope.$on('newTransaction', function (event, arg) {
         vm.newTransaction();
       });
 
-      $scope.$on('editTransaction', function(event, arg) {
+      $scope.$on('editTransaction', function (event, arg) {
         vm.editTransaction(arg);
       });
 
-      $scope.$on('deleteTransaction', function(event, arg) {
+      $scope.$on('deleteTransaction', function (event, arg) {
         vm.deleteTransaction(arg);
       });
 
-      $scope.$on('closeTransactionModal', function(event, arg) {
+      $scope.$on('closeTransactionModal', function (event, arg) {
         vm.closeTransactionModal();
       });
 
@@ -103,7 +106,7 @@
 
       function openTransactionModal() {
         $('#transactionModal').modal('show');
-        $('#transactionModal').on('shown.bs.modal', function(e) {
+        $('#transactionModal').on('shown.bs.modal', function (e) {
           $('#transactionForm-firstField').focus();
         });
       }
