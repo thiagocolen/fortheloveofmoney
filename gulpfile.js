@@ -10,7 +10,9 @@ var gulp = require('gulp'),
 
 // Clean WWW Folder
 gulp.task('clean', function () {
-  return gulp.src('./build/', { read: false })
+  return gulp.src('./build/', {
+      read: false
+    })
     .pipe(clean());
 });
 
@@ -20,7 +22,9 @@ gulp.task('dependencies', function () {
   // app
   gulp.src('./src/client/app/**/*.js')
     .pipe(sourcemaps.init())
-    .pipe(babel())
+    .pipe(babel({
+      presets: ['es2015']
+    }))
     .pipe(concat('main.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./build/assets/scripts/'));
@@ -28,33 +32,33 @@ gulp.task('dependencies', function () {
 
   // scripts
   gulp.src([
-    './node_modules/jquery/dist/jquery.js',
-    './node_modules/bootstrap/dist/js/bootstrap.js',
-    './node_modules/angular/angular.js',
-    './node_modules/angular-route/angular-route.js',
-    './node_modules/angular-local-storage/dist/angular-local-storage.js',
-    './node_modules/firebase/firebase.js',
-    './node_modules/angularfire/dist/angularfire.js',
-    './node_modules/chart.js/Chart.js',
-    './node_modules/angular-chart.js/dist/angular-chart.js',
-    './node_modules/angular-hotkeys/build/hotkeys.js'
-  ])
+      './node_modules/jquery/dist/jquery.js',
+      './node_modules/bootstrap/dist/js/bootstrap.js',
+      './node_modules/angular/angular.js',
+      './node_modules/angular-route/angular-route.js',
+      './node_modules/angular-local-storage/dist/angular-local-storage.js',
+      './node_modules/firebase/firebase.js',
+      './node_modules/angularfire/dist/angularfire.js',
+      './node_modules/chart.js/Chart.js',
+      './node_modules/angular-chart.js/dist/angular-chart.js',
+      './node_modules/angular-hotkeys/build/hotkeys.js'
+    ])
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest('./build/assets/scripts/'));
 
 
   // css
   gulp.src([
-    './src/client/assets/styles/angular-chart.css',
-    './node_modules/angular-hotkeys/build/hotkeys.css'
-  ])
+      './src/client/assets/styles/angular-chart.css',
+      './node_modules/angular-hotkeys/build/hotkeys.css'
+    ])
     .pipe(gulp.dest('./build/assets/styles/'));
 
 
   gulp.src([
-    './src/client/assets/styles/*.less',
-    './src/client/assets/styles/bootstrap/bootstrap.less'
-  ])
+      './src/client/assets/styles/*.less',
+      './src/client/assets/styles/bootstrap/bootstrap.less'
+    ])
     .pipe(less())
     .pipe(gulp.dest('./build/assets/styles/'));
 
