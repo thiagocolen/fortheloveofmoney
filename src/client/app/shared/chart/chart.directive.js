@@ -56,7 +56,6 @@
       }
 
       function renderChart() {
-        console.log('renderChart()');
         // issue - será que tem um jeito melhor de fazer isso?
         FirebaseService.chartData(vm.currentAuth).then(function (data) {
           vm.series = ['Conta-Corrente'];
