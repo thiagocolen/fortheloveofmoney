@@ -59,6 +59,7 @@
             transactions.$add(transaction.panelTransaction)
               .then(function (ref) {
                 $rootScope.$broadcast('closeTransactionModal');
+                $rootScope.$broadcast('renderChart');
               });
           });
         });
@@ -85,6 +86,7 @@
 
           transactions.$save(transactionRecord).then(function () {
             $rootScope.$broadcast('closeTransactionModal');
+            $rootScope.$broadcast('renderChart');
           });
         });
       }
@@ -96,7 +98,9 @@
 
       transactions.$loaded().then(function () {
         var transactionToDelete = transactions.$getRecord(id);
-        transactions.$remove(transactionToDelete);
+        transactions.$remove(transactionToDelete).then(function () {
+          $rootScope.$broadcast('renderChart');
+        });
       });
     }
 
