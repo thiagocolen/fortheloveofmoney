@@ -22,10 +22,12 @@
     navbarController.$inject = ['$scope'];
 
     function navbarController($scope) {
+      /* eslint no-invalid-this: 0*/
       var vm = this;
 
       vm.newTransaction = newTransaction;
       vm.manageCategories = manageCategories;
+      vm.openHelperModal = openHelperModal;
       vm.logout = logout;
       vm.signOutNavbarState = signOutNavbarState;
 
@@ -41,6 +43,10 @@
 
       function logout() {
         AuthenticationService.logout();
+      }
+
+      function openHelperModal() {
+        $rootScope.$broadcast('openHelperModal');
       }
 
       function signOutNavbarState() {

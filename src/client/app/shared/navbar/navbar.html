@@ -32,17 +32,19 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
+            <li role="separator" class="divider"></li>
+            <li>
+              <a href="" ng-click="vm.openHelperModal()" ng-hide="vm.signOutNavbarState()">
+                <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>  &nbsp; help
+              </a>
+            </li>
+            <li role="separator" class="divider"></li>
             <li>
               <a href="" ng-click="vm.logout()" ng-hide="vm.signOutNavbarState()">
-                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> &nbsp; logout
+                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp; logout
               </a>
             </li>
           </ul>
-        </li>
-        <li>
-          <a href="" ng-hide="vm.signOutNavbarState()">
-            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-          </a>
         </li>
       </ul>
     </div>
