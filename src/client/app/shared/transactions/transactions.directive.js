@@ -5,9 +5,15 @@
     .module('fortheloveofmoney')
     .directive('transactionManagerDirective', transactionManagerDirective);
 
-  transactionManagerDirective.$inject = ['$firebaseArray', 'FirebaseService'];
+  transactionManagerDirective.$inject = [
+    '$firebaseArray',
+    'FirebaseService'
+  ];
 
-  function transactionManagerDirective($firebaseArray, FirebaseService) {
+  function transactionManagerDirective(
+    $firebaseArray,
+    FirebaseService
+  ) {
     var directive = {
       bindToController: true,
       controller: transactionModalController,
