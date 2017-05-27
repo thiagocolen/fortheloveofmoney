@@ -8,9 +8,21 @@
 @lightest-color: #FFFFFF;
 @darkest-color: #000000;
 //---------------------------
-body {
-  // font-family: 'Alegreya Sans', sans-serif;
-  // font-size: 16px;
+navbar-directive {
+  .dropdown-toggle {
+    &:hover {
+      span {
+        color: @sad-yellows;
+      }            
+    }
+    span {
+      color: @light-blue;
+    }
+    img {
+      margin: 0 5px;
+      width: 20px;
+    }
+  }
 }
 
 .sortorder:after {
@@ -19,49 +31,6 @@ body {
 
 .sortorder.reverse:after {
   content: '\e252';
-}
-
-.navbar {
-  // border-radius: 0px;
-}
-
-.navbar-ftlom {
-  // background-color: @uniform-blue;
-  // border-color: #4cae4c;
-  // border: none;
-  // color: #fff;
-}
-
-.navbar-brand,
-.navbar-brand:hover {
-  // color: @dark-blue;
-}
-
-.nav {
-  li {
-    a {
-      // color: @dark-blue;
-    }
-    a:hover {
-      // text-decoration: none;
-      // background-color: @dark-blue;
-      // color: @sad-yellow;
-    }
-  }
-}
-
-.nav {
-  li {
-    button {
-      // margin: 15px 0 0 15px;
-      // background-color: @dark-blue;
-      // border: solid 1px @uniform-blue;
-    }
-    button:hover {
-      // background-color: @uniform-blue;
-      // border: solid 1px @dark-blue;
-    }
-  }
 }
 
 .spacer {
