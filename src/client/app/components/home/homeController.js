@@ -6,17 +6,11 @@
     .controller('HomeCtrl', HomeCtrl);
 
   HomeCtrl.$inject = [
-    '$firebaseArray',
-    '$firebaseObject',
-    '$filter',
     '$rootScope',
     'hotkeys',
     'currentAuth'];
 
   function HomeCtrl(
-    $firebaseArray,
-    $firebaseObject,
-    $filter,
     $rootScope,
     hotkeys,
     currentAuth
