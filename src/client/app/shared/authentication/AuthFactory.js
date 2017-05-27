@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -10,5 +10,4 @@
   function Auth($firebaseAuth) {
     return $firebaseAuth();
   }
-
 })();

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -14,10 +14,10 @@
 
     redirect();
 
-    ////////////
+    // ----------
 
     function login() {
-      var result = AuthenticationService.login();
+      AuthenticationService.login();
     }
 
     function redirect() {
@@ -26,5 +26,4 @@
       }
     }
   }
-
 })();

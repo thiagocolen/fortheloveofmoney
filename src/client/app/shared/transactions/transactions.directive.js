@@ -1,19 +1,27 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('fortheloveofmoney')
     .directive('transactionManagerDirective', transactionManagerDirective);
 
-  transactionManagerDirective.$inject = ['$firebaseArray', 'FirebaseService'];
+  transactionManagerDirective.$inject = [
+    '$firebaseArray',
+    'FirebaseService'
+  ];
 
-  function transactionManagerDirective($firebaseArray, FirebaseService) {
+  function transactionManagerDirective(
+    $firebaseArray,
+    FirebaseService
+  ) {
     var directive = {
       bindToController: true,
       controller: transactionModalController,
       controllerAs: 'vm',
       restrict: 'EA',
-      scope: { },
+      scope: {
+        currentAuth: '='
+      },
       templateUrl: 'assets/htmls/shared/transactions/transactions.html'
     };
 
@@ -21,14 +29,16 @@
 
     function transactionModalController($scope) {
       var vm = this;
-      var Ref = firebase.database().ref();
 
       vm.panelTransaction = {};
       vm.panelTransactionAux = {};
       vm.panelTitle = 'New Transaction';
+
       // issue - será que tem um jeito melhor de fazer isso?
-      FirebaseService.allCategories().then(function (data) {
-        vm.categories = data;
+      $scope.$watch('vm.currentAuth', function (current, original) {
+        FirebaseService.allCategories(vm.currentAuth).then(function (data) {
+          vm.categories = data;
+        });
       });
 
       vm.newTransaction = newTransaction;
@@ -37,24 +47,24 @@
       vm.deleteTransaction = deleteTransaction;
       vm.closeTransactionModal = closeTransactionModal;
 
-      $scope.$on('newTransaction', function(event, arg) {
+      $scope.$on('newTransaction', function (event, arg) {
         vm.newTransaction();
       });
 
-      $scope.$on('editTransaction', function(event, arg) {
+      $scope.$on('editTransaction', function (event, arg) {
         vm.editTransaction(arg);
       });
 
-      $scope.$on('deleteTransaction', function(event, arg) {
+      $scope.$on('deleteTransaction', function (event, arg) {
         vm.deleteTransaction(arg);
       });
 
-      $scope.$on('closeTransactionModal', function(event, arg) {
+      $scope.$on('closeTransactionModal', function (event, arg) {
         vm.closeTransactionModal();
       });
 
 
-      ////////////
+      // //////////
 
 
       function newTransaction() {
@@ -86,7 +96,7 @@
           var transaction = {};
           transaction.panelTransaction = vm.panelTransaction;
           transaction.panelTransactionAux = vm.panelTransactionAux;
-          FirebaseService.saveTransaction(type, transaction);
+          FirebaseService.saveTransaction(type, transaction, vm.currentAuth);
         }
       }
 
@@ -102,14 +112,12 @@
 
       function openTransactionModal() {
         $('#transactionModal').modal('show');
-        $('#transactionModal').on('shown.bs.modal', function(e) {
+        $('#transactionModal').on('shown.bs.modal', function (e) {
           $('#transactionForm-firstField').focus();
         });
       }
-
     }
 
     return directive;
- 
   }
 })();

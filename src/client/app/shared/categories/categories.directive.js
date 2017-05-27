@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -13,7 +13,9 @@
       controller: categoryManagerController,
       controllerAs: 'vm',
       restrict: 'EA',
-      scope: {},
+      scope: {
+        currentAuth: '='
+      },
       templateUrl: 'assets/htmls/shared/categories/categories.html'
     };
 
@@ -23,8 +25,10 @@
       var vm = this;
 
       // issue - será que tem um jeito melhor de fazer isso?
-      FirebaseService.allCategories().then(function (data) {
-        vm.categories = data;
+      $scope.$watch('vm.currentAuth', function (current, original) {
+        FirebaseService.allCategories(vm.currentAuth).then(function (data) {
+          vm.categories = data;
+        });
       });
 
       vm.panelCategory = {};
@@ -36,20 +40,20 @@
       vm.deleteCategory = deleteCategory;
       vm.cleanCategoryModal = cleanCategoryModal;
 
-      $scope.$on('manageCategories', function(event, arg) {
+      $scope.$on('manageCategories', function (event, arg) {
         openCategoryModal();
       });
 
-      $scope.$on('cleanCategoryModal', function(event, arg) {
+      $scope.$on('cleanCategoryModal', function (event, arg) {
         vm.cleanCategoryModal();
       });
 
-      ////////////
+      // //////////
 
       function openCategoryModal() {
-        vm.categoryType = 'add';        
+        vm.categoryType = 'add';
         $('#categoryModal').modal('show');
-        $('#categoryModal').on('shown.bs.modal', function(e) {
+        $('#categoryModal').on('shown.bs.modal', function (e) {
           $('#categoryForm-firstField').focus();
         });
       }
@@ -62,7 +66,11 @@
 
       function saveCategory() {
         if ($scope.categoryForm.$valid == true) {
-          FirebaseService.saveCategory(vm.categoryType, vm.panelCategory);
+          FirebaseService.saveCategory(
+            vm.categoryType,
+            vm.panelCategory,
+            vm.currentAuth
+          );
         }
       };
 
@@ -79,6 +87,5 @@
     }
 
     return directive;
-
   }
 })();
